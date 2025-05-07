@@ -1,8 +1,15 @@
 import AppRoutes from "./routes/AppRoutes";
+import './App.css';
+import { ThemeProvider } from "./context/ThemeContext";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 function App() {
   return (
 <div>
-  <AppRoutes/>
+      <ThemeProvider>
+          <AppRoutes />
+      </ThemeProvider>
+  
 </div>
   );
 }

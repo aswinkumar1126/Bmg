@@ -1,0 +1,159 @@
+/* Base Styles */
+.slider-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+}
+
+/* Slide Styles */
+.slide {
+    position: relative;
+    outline: none;
+    padding: 0 5px;
+    /* Small gap between slides */
+    box-sizing: border-box;
+}
+
+.slide-image {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+}
+
+/* Loading State */
+.skeleton-wrapper {
+    width: 100%;
+    padding: 0 5px;
+}
+
+.skeleton-image {
+    width: 100%;
+    border-radius: 0;
+}
+
+.skeleton-dots {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Error State */
+.error-message {
+    color: #e74c3c;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+.retry-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.retry-button:hover {
+    background-color: #2980b9;
+}
+
+.no-images {
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+/* Slider Navigation */
+.slick-prev,
+.slick-next {
+    width: 40px;
+    height: 40px;
+    z-index: 1;
+}
+
+.slick-prev {
+    left: 15px;
+}
+
+.slick-next {
+    right: 15px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    color: #2c3e50;
+    font-size: 40px;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.slick-prev:hover:before,
+.slick-next:hover:before {
+    opacity: 1;
+    color: #3498db;
+}
+
+/* Dots Styling */
+.slick-dots {
+    bottom: 15px;
+}
+
+.slick-dots li button:before {
+    font-size: 12px;
+    color: #fff;
+    opacity: 0.7;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #3498db;
+    opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+
+    .slick-prev,
+    .slick-next {
+        width: 30px;
+        height: 30px;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        font-size: 30px;
+    }
+
+    .slick-prev {
+        left: 5px;
+    }
+
+    .slick-next {
+        right: 5px;
+    }
+
+    .slide-image {
+        max-height: 60vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide-image {
+        max-height: 50vh;
+    }
+
+    .slick-dots {
+        bottom: 5px;
+    }
+}

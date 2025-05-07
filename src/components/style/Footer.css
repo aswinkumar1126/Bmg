@@ -2,10 +2,11 @@
 .footer {
     background: linear-gradient(135deg, #222, #333);
     color: white;
-    padding: 10px 5px 10px;
+    padding: 20px 0 10px;
     font-family: 'Poppins', sans-serif;
     position: relative;
     overflow: hidden;
+    top:0
 }
 
 .footer::before {
@@ -14,7 +15,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 3px;
     background: linear-gradient(90deg, #f4b400, #d4a000, #f4b400);
 }
 
@@ -22,26 +23,27 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0 10px;
+    gap: 20px;
 }
 
 .footer-column {
     flex: 1;
-    padding: 0 10px ;
-    min-width: 250px;
+    min-width: 200px;
     margin-bottom: 10px;
 }
 
 .footer-header {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #f4b400;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
 }
 
 .footer-header::after {
@@ -49,7 +51,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 50px;
+    width: 60px;
     height: 2px;
     background: #f4b400;
 }
@@ -57,15 +59,18 @@
 .footer-links {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 .footer-link-item {
-    margin: 12px 0;
+    margin: 8px 0;
     cursor: pointer;
     transition: all 0.3s;
     font-weight: 300;
     position: relative;
     padding-left: 15px;
+    font-size: 0.85rem;
+    line-height: 1.4;
 }
 
 .footer-link-item::before {
@@ -73,27 +78,30 @@
     position: absolute;
     left: 0;
     color: #f4b400;
+    font-size: 1.2rem;
+    line-height: 0.8;
 }
 
 .footer-column p {
-    margin: 15px 0;
+    margin: 10px 0;
     font-weight: 300;
-    line-height: 1.6;
+    line-height: 1.5;
+    font-size: 0.85rem;
 }
 
 .social-icons {
     display: flex;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 12px;
+    margin-top: 15px;
     flex-wrap: wrap;
 }
 
 .social-icons a {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: white;
     text-decoration: none;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,30 +111,31 @@
 }
 
 .newsletter {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .newsletter h5 {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
     font-weight: 400;
 }
 
 .newsletter-input {
     display: flex;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .newsletter-input input {
     flex: 1;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border: none;
     border-radius: 4px 0 0 4px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    min-width: 0;
 }
 
 .newsletter-input button {
-    padding: 0 15px;
+    padding: 0 12px;
     background: #f4b400;
     color: #222;
     border: none;
@@ -134,48 +143,106 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+    font-size: 0.85rem;
+    white-space: nowrap;
 }
 
 .footer-bottom {
     text-align: center;
-    margin-top: 50px;
-    font-size: 0.8rem;
-    padding-top: 20px;
+    margin-top: 30px;
+    font-size: 0.75rem;
+    padding-top: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.footer-bottom p {
-    margin: 0 0 10px;
+.copy-rights {
+    margin: 0 0 8px;
+    font-size: 0.85rem;
+}
+.design{
+    margin: 0 0 8px;
+    font-size: 0.7rem;
+
+}
+.desingedby{
+    margin: 0 auto;
+    font-size: 0.75rem;
+    width: fit-content;
+    text-decoration: none;
+    color: azure;
+
+}
+.desingedby:hover {
+    color: #f4b400;
 }
 
 .payment-methods {
+    margin-top: 10px;
     display: flex;
     justify-content: center;
-    gap: 15px;
-    font-size: 1.5rem;
+    gap: 12px;
+    font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.7);
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+    .footer {
+        padding: 30px 0 15px;
+    }
+
     .footer-container {
         flex-direction: column;
+        gap: 15px;
     }
 
     .footer-column {
         min-width: 100%;
-        padding: 0;
-        margin-bottom: 40px;
+        margin-bottom: 15px;
     }
-    
+
+    .footer-header {
+        margin-bottom: 12px;
+    }
+
+    .newsletter-input {
+        flex-direction: row;
+    }
+
+    .newsletter-input input {
+        width: 60%;
+    }
+
+    .newsletter-input button {
+        width: 40%;
+    }
+        .footer-bottom p:hover {
+            color: #f4b400;
+        }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 25px 0 10px;
+    }
+
+    .footer-container {
+        padding: 0 15px;
+    }
+
     .newsletter-input {
         flex-direction: column;
     }
-    
+
     .newsletter-input input,
     .newsletter-input button {
         width: 100%;
         border-radius: 4px;
-        margin: 5px 0;
+        margin: 3px 0;
+    }
+
+    .payment-methods {
+        gap: 8px;
+        font-size: 1rem;
     }
 }

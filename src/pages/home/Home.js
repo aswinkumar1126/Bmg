@@ -1,9 +1,12 @@
+import ImageSlider from "../slider/ImageSlider"
+import Testimonial from "../testimonial/Testimonial";
 function Home() {
         return (
             <div>
-                <section>
-                <h1>Home</h1>
+                <section >
+                    <ImageSlider />
                 </section>
+                <Testimonial />
             </div>
 
         );

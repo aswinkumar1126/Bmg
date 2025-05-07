@@ -114,12 +114,12 @@ const Footer = () => {
                 >
                     <h4 className="footer-header">CONTACT</h4>
                     <motion.p variants={itemVariants}>
-                        M/s. BMG Jewellers Private Limited,<br />
+                      Showroom Address : <br /> M/s. BMG Jewellers Private Limited,<br />
                         160, Melamasi Street,<br />
                         Madurai- 625001
                     </motion.p>
                     <motion.p variants={itemVariants}>
-                        +91- 70946 70946,<br />
+                        Primary Contact Numbers :<br /> +91- 70946 70946,<br />
                         86085 96085,<br />
                         86829 96829
                     </motion.p>
@@ -188,7 +188,9 @@ const Footer = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
             >
-                <p>&copy; 2025 BMG Jewellery. All rights reserved.</p>
+                <p className='copy-rights'>&copy; 2025 BMG Jewellery Private Limited. All rights reserved.</p>
+                <p className='design'>Designed by </p>
+                <a href='https://www.brightechsoftwaresolution.com/' className='desingedby'>BrightechSoftwareSolution</a>
                 <div className="payment-methods">
                     <i className="fab fa-cc-visa"></i>
                     <i className="fab fa-cc-mastercard"></i>
