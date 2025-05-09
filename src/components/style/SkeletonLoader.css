@@ -1,0 +1,49 @@
+/* SkeletonLoader.css */
+.skeleton-loader {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.skeleton-item {
+    background-color: #ddd;
+    /* Light gray background for the skeleton loader */
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Shape variations */
+.skeleton-item.rectangular {
+    border-radius: 4px;
+    /* Rectangular shape */
+}
+
+.skeleton-item.circle {
+    border-radius: 50%;
+    /* Circular shape for items like avatars */
+}
+
+/* Example of a custom width */
+.skeleton-item.custom-width {
+    width: 80%;
+    /* Set a custom width for some items */
+}
+
+/* Add a pulse animation */
+@keyframes pulse {
+    0% {
+        background-color: #ddd;
+    }
+
+    50% {
+        background-color: #f0f0f0;
+    }
+
+    100% {
+        background-color: #ddd;
+    }
+}
+
+.skeleton-item {
+    animation: pulse 1.5s infinite ease-in-out;
+}

@@ -1,14 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './NotFound.css'; // We'll create this CSS file next
-import CustomButton from '../../components/Button';
-
 function NotFound() {
     const navigate = useNavigate();
-    const handleLoginClick = () => {
-        console.log("Login clicked");
-        navigate('/login');
-    };
 
     return (
         <motion.div
@@ -57,14 +51,7 @@ function NotFound() {
                     >
                         Go Back
                     </motion.button>
-                    <br></br>
-                    <CustomButton
-                        label="Login"
-                        onClick={handleLoginClick}
-                        variant="primary"
-                        size="large"
-                        isLoading={false}
-                    />
+        
                 </div>
             </div>
         </motion.div>
