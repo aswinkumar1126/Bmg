@@ -1,0 +1,215 @@
+/* CustomButton.css */
+:root {
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --secondary-color: #f1f5f9;
+    --secondary-hover: #e2e8f0;
+    --text-color: #1e293b;
+    --disabled-color: #94a3b8;
+    --white: #ffffff;
+    --transition-speed: 0.3s;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.custom-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: none;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    overflow: hidden;
+    transform: translateZ(0);
+    will-change: transform;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Button Variants */
+.custom-button.primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.custom-button.primary:hover:not(.disabled) {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.custom-button.secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid #cbd5e1;
+}
+
+.custom-button.secondary:hover:not(.disabled) {
+    background-color: var(--secondary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.custom-button.text {
+    background-color: transparent;
+    color: var(--primary-color);
+    box-shadow: none;
+    padding: 0;
+}
+
+.custom-button.text:hover:not(.disabled) {
+    text-decoration: underline;
+    transform: none;
+}
+
+/* Button Sizes */
+.custom-button.small {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    min-width: 80px;
+}
+
+.custom-button.medium {
+    padding: 10px 20px;
+    font-size: 1rem;
+    min-width: 100px;
+}
+
+.custom-button.large {
+    padding: 12px 24px;
+    font-size: 1.125rem;
+    min-width: 120px;
+}
+
+/* Disabled State */
+.custom-button.disabled {
+    background-color: var(--disabled-color);
+    color: var(--white);
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Loading State */
+.custom-button.loading {
+    color: transparent;
+    cursor: progress;
+}
+
+.button-loader {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--white);
+    animation: spin 1s ease-in-out infinite;
+}
+
+.custom-button.secondary .button-loader {
+    border-top-color: var(--primary-color);
+}
+
+/* Button Icon */
+.button-icon {
+    display: inline-flex;
+    margin-right: 8px;
+    transition: transform var(--transition-speed) ease;
+}
+
+.custom-button:hover:not(.disabled) .button-icon {
+    transform: translateX(2px);
+}
+
+/* Ripple Effect */
+.custom-button:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.custom-button:focus:not(:active)::after {
+    animation: ripple 0.6s ease-out;
+}
+
+/* Animations */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 1;
+    }
+
+    20% {
+        transform: scale(25, 25);
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(40, 40);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .custom-button.medium {
+        padding: 8px 16px;
+        font-size: 0.9375rem;
+    }
+
+    .custom-button.large {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .custom-button.small {
+        padding: 6px 12px;
+    }
+
+    .button-icon {
+        margin-right: 6px;
+    }
+}

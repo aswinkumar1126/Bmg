@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import Logo from '../assets/header/logo.png';
-import Search from './Search';
+import { NavLink, Link, useLocation } from 'react-router-dom';
+import Logo from '../assets/images/header/logo.png';
+import Search from '../components/Search';
 import React, { useEffect, useState } from 'react';
 import './style/Header.css';
 import {
@@ -16,7 +16,8 @@ function Header() {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
-    const  { theme, toggleTheme } = useTheme();
+    const { theme, toggleTheme } = useTheme();
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -38,6 +39,14 @@ function Header() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    // Scroll to top on route change
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }, [location.pathname]);
 
     const toggleDropdown = (menu) => {
         if (isMobile) {
@@ -69,14 +78,25 @@ function Header() {
         { name: 'CONTACT US', path: '/contact' }
     ];
 
+    // Check if a nav item is active
+    const isActive = (path, submenu = []) => {
+        const currentPath = location.pathname;
+
+        // Check exact match for non-category paths
+        if (!submenu.length) {
+            return currentPath === path;
+        }
+
+        // For category pages, check if current path starts with the base path
+        return currentPath.startsWith(path);
+    };
+
     return (
         <header className={`header-container ${isScrolled ? 'scrolled' : ''}`}>
             {/* Top Bar */}
             <div className="top-bar">
                 <div className="top-bar-content">
                     <div className="top-contact-info">
-                        
-
                         <div className="contact-items">
                             <motion.a href="tel:+91-7094670946" className="contact-item" whileHover={{ x: 3 }}>
                                 <FaPhone /> +91-7094670946
@@ -104,7 +124,6 @@ function Header() {
                             </Link>
                         </motion.div>
                         <div className="header-actions">
-                            {/* Theme Toggle Button */}
                             <motion.button
                                 className="theme-toggle"
                                 onClick={toggleTheme}
@@ -191,9 +210,11 @@ function Header() {
                             key={item.name}
                             onMouseEnter={() => !isMobile && toggleDropdown(item.name)}
                             onMouseLeave={() => !isMobile && closeDropdown()}
+                            className={isActive(item.path, item.submenu) ? 'active-nav-item' : ''}
                         >
-                            <Link
+                            <NavLink
                                 to={item.path}
+                                end
                                 onClick={() => {
                                     if (isMobile && !item.submenu) {
                                         setIsMobileMenuOpen(false);
@@ -202,11 +223,14 @@ function Header() {
                                         toggleDropdown(item.name);
                                     }
                                 }}
+                                className={({ isActive }) =>
+                                    isActive ? 'active-nav-link' : ''
+                                }
                             >
                                 {item.name}
                                 {item.submenu && <FaChevronDown className="dropdown-arrow" />}
                                 <span className="nav-hover-indicator"></span>
-                            </Link>
+                            </NavLink>
 
                             {item.submenu && (
                                 <AnimatePresence>
@@ -224,9 +248,14 @@ function Header() {
                                                     whileHover={{ x: 5 }}
                                                     onClick={() => setIsMobileMenuOpen(false)}
                                                 >
-                                                    <Link to={`${item.path}/${subItem.toLowerCase()}`}>
+                                                    <NavLink
+                                                        to={`${item.path}/${subItem.toLowerCase()}`}
+                                                        className={({ isActive }) =>
+                                                            isActive ? 'active-subnav-link' : ''
+                                                        }
+                                                    >
                                                         {subItem}
-                                                    </Link>
+                                                    </NavLink>
                                                 </motion.li>
                                             ))}
                                         </motion.ul>

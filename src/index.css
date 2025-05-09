@@ -1,8 +1,5 @@
 /* Reset and base styles */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 :root {
     --primary: #d4af37;
     /* Gold */

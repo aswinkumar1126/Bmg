@@ -1,33 +1,13 @@
-import React, { useEffect, useState } from "react";
+
 import Slider from "react-slick";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./ImageSlider.css";
-import axiosInstance from "../../api/axios";
-function ImageSlider() {
-    const [images, setImages] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
-    // Fetch image data from API
-    useEffect(() => {
-        const fetchImages = async () => {
-            try {
-                const response = await axiosInstance.get("/slider/getAllImage");
-                setImages(response.data); // Axios automatically parses JSON
-            } catch (err) {
-                console.error("Error fetching images:", err);
-                setError("Failed to load images. Please try again later.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-
-        fetchImages();
-    }, []);
+function ImageSlider({ images, loading, error }) {
+    
 
     // Slider settings with responsive breakpoints
     const settings = {

@@ -1,32 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axiosInstance from '../../api/axios';
+import React from 'react';
 import './Testimonial.css';
 
-const Testimonial = () => {
-    const [videoUrl, setVideoUrl] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchVideo = async () => {
-            try {
-                setLoading(true);
-                const response = await axiosInstance.get("/cloudinary/video");
-                if (response.data) {
-                    setVideoUrl(response.data);
-                } else {
-                    throw new Error("No video URL returned");
-                }
-            } catch (error) {
-                console.error('Error fetching video URL:', error);
-                setError("Failed to load testimonial video");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchVideo();
-    }, []);
+const Testimonial = ({ videoUrl, setVideoUrl, loading, error }) => {
+   
 
     const testimonials = [
         {
@@ -72,12 +48,15 @@ const Testimonial = () => {
                         </div>
                     ) : (
                         <div className="video-wrapper">
-                            <video
-                                controls
-                                className="responsive-video"
-                                poster="/video-poster.jpg"
-                                preload="metadata"
-                            >
+                                    <video
+                                        controls
+                                        className="responsive-video"
+                                        poster="/video-poster.jpg"
+                                        preload="metadata"
+                                        autoPlay
+                                        loop
+                                        muted
+                                    >
                                 <source src={videoUrl} type="video/mp4" />
                                 Your browser does not support HTML5 video.
                             </video>

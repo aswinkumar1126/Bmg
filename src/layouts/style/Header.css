@@ -1,25 +1,32 @@
 :root {
-  /* Light theme */
-  --primary-color: #d4af37;
-  --secondary-color: #333;
-  --text-color: #333;
-  --text-light: #666;
-  --bg-primary: #fff;
-  --bg-secondary: #f9f9f9;
-  --top-bar-bg: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-  --nav-bg: #f9f9f9;
+    /* Light theme */
+    --primary-color: #d4af37;
+    --secondary-color: #333;
+    --text-color: #333;
+    --text-light: #666;
+    --bg-primary: #fff;
+    --bg-secondary: #f9f9f9;
+    --top-bar-bg: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    --nav-bg: #f9f9f9;
+    --box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+    --top-bar-height: 40px;
+    --main-header-height: 80px;
+    --nav-height: 50px;
 }
 
 [data-theme="dark"] {
-  /* Dark theme */
-  --primary-color: #f4d03f;
-  --secondary-color: #eee;
-  --text-color: #f8f9fa;
-  --text-light: #ccc;
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #2d2d2d;
-  --top-bar-bg: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
-  --nav-bg: #2d2d2d;
+    /* Dark theme */
+    --primary-color: #f4d03f;
+    --secondary-color: #eee;
+    --text-color: #f8f9fa;
+    --text-light: #ccc;
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --top-bar-bg: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    --nav-bg: #2d2d2d;
+    --box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Base Styles */
@@ -29,9 +36,13 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .header-container {
     width: 100%;
-    background-color: #fff;
+    background-color: var(--bg-primary);
     font-family: 'Poppins', sans-serif;
     box-shadow: var(--box-shadow);
     position: sticky;
@@ -46,9 +57,13 @@
     background-color: rgba(255, 255, 255, 0.98);
 }
 
+[data-theme="dark"] .header-container.scrolled {
+    background-color: rgba(26, 26, 26, 0.98);
+}
+
 /* Top Bar - Enhanced for Tablet Visibility */
 .top-bar {
-    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    background: var(--top-bar-bg);
     font-size: 0.85rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     height: var(--top-bar-height);
@@ -113,6 +128,7 @@
     cursor: pointer;
     transition: all var(--transition-speed) ease;
     white-space: nowrap;
+    color: var(--text-color);
 }
 
 .location:hover,
@@ -122,7 +138,6 @@
 
 .track-order {
     text-decoration: none;
-    color: var(--text-color);
 }
 
 .login-btn {
@@ -144,30 +159,27 @@
     transform: translateY(-2px);
 }
 
-.top-bar-divider {
-    height: 1px;
-    background: rgba(0, 0, 0, 0.1);
-    width: 100%;
-    margin: 0.25rem 0;
-    display: none;
-}
 /* Theme Toggle Styles */
-.theme-toggle button {
-    background: transparent;
+.theme-toggle {
+    background: none;
     border: none;
-    font-size: 1.4rem;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 8px;
+    margin-right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-color);
-    transition: var(--transition-speed);
 }
 
-.theme-toggle button:hover {
+.theme-icon {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
     color: var(--primary-color);
-    transform: rotate(20deg);
+    transform: rotate(15deg);
 }
 
 /* Adjust header-actions to accommodate new button */
@@ -175,9 +187,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    /* Reduced from 1.5rem to fit new button */
 }
-
 
 /* Main Header */
 .main-header {
@@ -191,7 +201,7 @@
 .main-header-content {
     width: 100%;
     max-width: 1400px;
-    margin: 0 ;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -212,11 +222,13 @@
     width: auto;
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
 .logo-text {
     display: flex;
     flex-direction: column;
     text-decoration: none;
 }
+
 .logo-text pre {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -233,6 +245,7 @@
     animation: shine 3s linear infinite;
     position: relative;
 }
+
 .sub-logotext {
     font-size: 0.7rem;
     font-weight: 400;
@@ -258,28 +271,6 @@
     z-index: 10;
 }
 
-/* Theme Toggle Styles */
-.theme-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.theme-icon {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    transition: all 0.3s ease;
-}
-
-.theme-toggle:hover .theme-icon {
-    color: var(--primary-color);
-    transform: rotate(15deg);
-}
 /* Cart */
 .cart-container {
     position: relative;
@@ -289,7 +280,7 @@
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    padding: 0.8rem 1.5rem;
+    padding: 0.6rem 1.3rem;
     background-color: transparent;
     border: 2px solid var(--primary-color);
     border-radius: 30px;
@@ -341,7 +332,7 @@
 
 /* Navigation */
 .nav-links {
-    background-color: var(--light-bg);
+    background-color: var(--nav-bg);
     height: var(--nav-height);
     display: flex;
     align-items: center;
@@ -410,12 +401,37 @@
     width: 100%;
 }
 
+/* Active link styles */
+.active-nav-item {
+    position: relative;
+}
+
+.active-nav-link {
+    color: var(--primary-color) !important;
+    font-weight: bold;
+}
+
+.active-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.active-subnav-link {
+    color: var(--primary-color) !important;
+    font-weight: bold;
+}
+
 /* Dropdown Menu */
 .dropdown-menu {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: white;
+    background-color: var(--bg-primary);
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     box-shadow: var(--box-shadow);
     min-width: 180px;
@@ -445,6 +461,7 @@
 
 /* Responsive Styles */
 @media (max-width: 1200px) {
+
     .top-bar-content,
     .main-header-content {
         padding: 0 1.5rem;
@@ -461,21 +478,20 @@
         height: auto;
         padding: 0.5rem 0;
     }
-    
+
     .top-bar-content {
         flex-direction: column;
         gap: 0.5rem;
         padding: 0 1rem;
     }
-    
+
     .top-contact-info {
         width: 100%;
         justify-content: space-between;
         flex-wrap: wrap;
         gap: 1rem;
     }
-    
-    
+
     .contact-items {
         order: 3;
         width: 100%;
@@ -483,7 +499,7 @@
         flex-wrap: wrap;
         gap: 0.5rem;
     }
-    
+
     .top-social-links {
         order: 2;
         width: 100%;
@@ -491,42 +507,39 @@
         padding-top: 0.5rem;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
-    
+
     .login-btn {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
     }
-    
+
     .contact-item,
     .location,
     .track-order {
         font-size: 0.8rem;
     }
-                .theme-toggle button {
-                    font-size: 1.2rem;
-                    padding: 0.4rem;
-                }
-        
-                .header-actions {
-                    gap: 0.8rem;
-                }
-    
-    .top-bar-divider {
-        display: block;
+
+    .theme-toggle button {
+        font-size: 1.2rem;
+        padding: 0.4rem;
     }
-    
+
+    .header-actions {
+        gap: 0.8rem;
+    }
+
     .logo-img {
         height: 45px;
     }
-    
+
     .logo-text pre {
         font-size: 1.4rem;
-                }
-        
+    }
+
     .sub-logotext {
         font-size: 0.6rem;
     }
-    
+
     .mobile-menu-toggle {
         display: block;
     }
@@ -540,7 +553,7 @@
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
-        background-color: white;
+        background-color: var(--bg-primary);
         box-shadow: var(--box-shadow);
         border-top: none;
     }
@@ -621,8 +634,6 @@
         gap: 0.5rem;
     }
 
-
-
     .contact-items {
         flex-direction: column;
         align-items: center;
@@ -641,11 +652,11 @@
     .login-btn {
         width: auto;
     }
-    
+
     .logo-text pre {
         font-size: 1.2rem;
     }
-    
+
     .sub-logotext {
         font-size: 0.55rem;
     }
@@ -664,7 +675,7 @@
     .logo-text pre {
         font-size: 1.1rem;
     }
-    
+
     .sub-logotext {
         font-size: 0.5rem;
     }
@@ -691,7 +702,7 @@
         transition: none !important;
     }
 
-    .logo-text h1 {
+    .logo-text pre {
         background: var(--primary-color);
         -webkit-text-fill-color: initial;
         background-clip: initial;
