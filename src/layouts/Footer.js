@@ -1,22 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { NavLink } from 'react-router-dom';
 import './style/Footer.css';
 
 const Footer = () => {
-    // const linkVariants = {
-    //     hover: {
-    //         scale: 1.05,
-    //         color: '#f4b400',
-    //         transition: {
-    //             duration: 0.3,
-    //             ease: "easeInOut"
-    //         }
-    //     },
-    //     tap: {
-    //         scale: 0.95
-    //     }
-    // };
-
     const columnVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -37,7 +24,13 @@ const Footer = () => {
             transition: {
                 duration: 0.3
             }
-        }
+        },
+        hover: {
+            x: 5,
+            color: '#f4b400',
+            transition: { duration: 0.2 }
+        },
+        tap: { scale: 0.95 }
     };
 
     const socialIconVariants = {
@@ -53,10 +46,26 @@ const Footer = () => {
         }
     };
 
+    // Navigation links data
+    const usefulLinks = [
+        { path: '/privacy-policy', text: 'Privacy Policy' },
+        { path: '/categories', text: 'Category' },
+        { path: '/about', text: 'About Us' },
+        { path: '/gallery', text: 'Gallery' },
+        { path: '/more', text: '✓ More' }
+    ];
+
+    const navigationLinks = [
+        { path: '/', text: 'Home' },
+        { path: '/products', text: 'Products' },
+        { path: '/why-us', text: 'Why Us' },
+        { path: '/videos', text: 'Videos' }
+    ];
+
     return (
         <footer className="footer">
             <div className="footer-container">
-                {/* First Column */}
+                {/* First Column - Useful Links */}
                 <motion.div
                     className="footer-column"
                     initial="hidden"
@@ -66,7 +75,7 @@ const Footer = () => {
                 >
                     <h4 className="footer-header">USEFUL LINKS</h4>
                     <ul className="footer-links">
-                        {['Privacy Policy', 'Category', 'About Us', 'Gallery', '✓ More'].map((item, index) => (
+                        {usefulLinks.map((link, index) => (
                             <motion.li
                                 key={index}
                                 variants={itemVariants}
@@ -74,13 +83,20 @@ const Footer = () => {
                                 whileTap="tap"
                                 className="footer-link-item"
                             >
-                                {item}
+                                <NavLink
+                                    to={link.path}
+                                    className={({ isActive }) =>
+                                        isActive ? "active-footer-link" : ""
+                                    }
+                                >
+                                    {link.text}
+                                </NavLink>
                             </motion.li>
                         ))}
                     </ul>
                 </motion.div>
 
-                {/* Second Column */}
+                {/* Second Column - Navigation */}
                 <motion.div
                     className="footer-column"
                     initial="hidden"
@@ -90,7 +106,7 @@ const Footer = () => {
                 >
                     <h4 className="footer-header">NAVIGATION</h4>
                     <ul className="footer-links">
-                        {['Home', 'Products', 'Why Us', 'Videos'].map((item, index) => (
+                        {navigationLinks.map((link, index) => (
                             <motion.li
                                 key={index}
                                 variants={itemVariants}
@@ -98,13 +114,20 @@ const Footer = () => {
                                 whileTap="tap"
                                 className="footer-link-item"
                             >
-                                {item}
+                                <NavLink
+                                    to={link.path}
+                                    className={({ isActive }) =>
+                                        isActive ? "active-footer-link" : ""
+                                    }
+                                >
+                                    {link.text}
+                                </NavLink>
                             </motion.li>
                         ))}
                     </ul>
                 </motion.div>
 
-                {/* Third Column */}
+                {/* Third Column - Contact */}
                 <motion.div
                     className="footer-column"
                     initial="hidden"
@@ -114,7 +137,7 @@ const Footer = () => {
                 >
                     <h4 className="footer-header">CONTACT</h4>
                     <motion.p variants={itemVariants}>
-                      Showroom Address : <br /> M/s. BMG Jewellers Private Limited,<br />
+                        Showroom Address : <br /> M/s. BMG Jewellers Private Limited,<br />
                         160, Melamasi Street,<br />
                         Madurai- 625001
                     </motion.p>
@@ -128,7 +151,7 @@ const Footer = () => {
                     </motion.p>
                 </motion.div>
 
-                {/* Fourth Column */}
+                {/* Fourth Column - Connect */}
                 <motion.div
                     className="footer-column"
                     initial="hidden"
@@ -190,7 +213,7 @@ const Footer = () => {
             >
                 <p className='copy-rights'>&copy; 2025 BMG Jewellery Private Limited. All rights reserved.</p>
                 <p className='design'>Designed by </p>
-                <a href='https://www.brightechsoftwaresolution.com/' className='desingedby'>BrightechSoftwareSolution</a>
+                <a href='https://www.brightechsoftware.com' className='desingedby'>BrightechSoftwareSolution</a>
                 <div className="payment-methods">
                     <i className="fab fa-cc-visa"></i>
                     <i className="fab fa-cc-mastercard"></i>

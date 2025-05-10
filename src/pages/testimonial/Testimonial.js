@@ -1,7 +1,7 @@
 import React from 'react';
 import './Testimonial.css';
 
-const Testimonial = ({ videoUrl, setVideoUrl, loading, error }) => {
+const Testimonial = () => {
    
 
     const testimonials = [
@@ -30,39 +30,6 @@ const Testimonial = ({ videoUrl, setVideoUrl, loading, error }) => {
                     <p className="section-subtitle">Hear what our customers say about us</p>
                 </header>
 
-                <div className="video-testimonial">
-                    {loading ? (
-                        <div className="video-placeholder">
-                            <div className="spinner"></div>
-                            <p>Loading testimonial video...</p>
-                        </div>
-                    ) : error ? (
-                        <div className="video-error">
-                            <p>{error}</p>
-                            <button
-                                className="retry-button"
-                                onClick={() => window.location.reload()}
-                            >
-                                Try Again
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="video-wrapper">
-                                    <video
-                                        controls
-                                        className="responsive-video"
-                                        poster="/video-poster.jpg"
-                                        preload="metadata"
-                                        autoPlay
-                                        loop
-                                        muted
-                                    >
-                                <source src={videoUrl} type="video/mp4" />
-                                Your browser does not support HTML5 video.
-                            </video>
-                        </div>
-                    )}
-                </div>
 
                 <div className="testimonial-grid">
                     {testimonials.map((testimonial, index) => (

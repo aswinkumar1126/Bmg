@@ -81,7 +81,30 @@
     font-size: 1.2rem;
     line-height: 0.8;
 }
+.footer-link-item a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s;
+}
 
+.footer-link-item a:hover {
+    color: #f4b400;
+}
+
+.active-footer-link {
+    color: #f4b400 !important;
+    font-weight: 500;
+}
+
+.footer-link-item a::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #f4b400;
+    font-size: 1.2rem;
+    line-height: 0.8;
+}
 .footer-column p {
     margin: 10px 0;
     font-weight: 300;
