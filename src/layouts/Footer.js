@@ -52,7 +52,7 @@ const Footer = () => {
         { path: '/categories', text: 'Category' },
         { path: '/about', text: 'About Us' },
         { path: '/gallery', text: 'Gallery' },
-        { path: '/more', text: '✓ More' }
+        { path: '/login', text: 'Admin' }
     ];
 
     const navigationLinks = [

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import './style/Header.css';
 import {
     FaShoppingCart, FaMapMarkerAlt, FaPhone, FaEnvelope,
-    FaUser, FaBoxOpen, FaChevronDown, FaBars, FaTimes
+    FaBoxOpen, FaChevronDown, FaBars, FaTimes
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
@@ -118,11 +118,6 @@ function Header() {
                             </Link>
                         </motion.div>
 
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <Link to="/login" className="login-btn">
-                                <FaUser /> Log In | Sign Up
-                            </Link>
-                        </motion.div>
                         <div className="header-actions">
                             <motion.button
                                 className="theme-toggle"

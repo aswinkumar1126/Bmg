@@ -7,7 +7,7 @@ import LayoutWrapper from "../layouts/LayoutWrapper";
 import NotFound from "../pages/notFound/NotFound";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './AppRoutes.css';
-import Login from "../pages/login/Login";
+import Login from "../admin/page/login/Login";
 import Product from "../components/Product";
 import About from "../pages/about/About";
 import Contact from "../pages/contact/Contact";
@@ -15,8 +15,14 @@ import Contact from "../pages/contact/Contact";
 
 import AllVideos from "../components/AllVideos";
 
+import DashBoard from "../admin/page/dashboard/DashBoard";
 
+
+import ProtectedRoute from "./admin/ProtectedRoute";
 function AppRouter() {
+
+
+
     return (
 
         <Routes>
@@ -32,6 +38,11 @@ function AppRouter() {
             <Route path="/products" element={<LayoutWrapper><Product /></LayoutWrapper>} />
             {/* Add a 404 route if needed */}
             <Route path="*" element={<NotFound />} />
+
+            {/* Admin */}
+           
+            <Route path="/admin/dashboard" element={<ProtectedRoute> <DashBoard /> </ProtectedRoute>} />
+
         </Routes>
 
     );

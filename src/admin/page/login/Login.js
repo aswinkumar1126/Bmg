@@ -1,8 +1,7 @@
-// Login.js
 import React, { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 import { motion } from "framer-motion";
-import "./Login.css"; // Import custom CSS
+import "./Login.css";
 
 const Login = () => {
     const {
@@ -11,10 +10,13 @@ const Login = () => {
         password,
         loading,
         error,
+        mode,
+        setMode,
         setMobileNumber,
         setName,
         setPassword,
-        handleLogin,
+        handleAuth,
+        key,setKey
     } = useContext(AuthContext);
 
     const containerVariants = {
@@ -40,6 +42,14 @@ const Login = () => {
         },
     };
 
+    const toggleMode = () => {
+        setMode(mode === "login" ? "signup" : "login");
+        setMobileNumber("");
+        setName("");
+        setPassword("");
+        setKey("");
+    };
+
     return (
         <motion.div
             className="login-container"
@@ -50,7 +60,7 @@ const Login = () => {
             <motion.div className="login-card" variants={itemVariants}>
                 <div className="text-center">
                     <motion.h2 className="login-title" variants={itemVariants}>
-                        Admin Sign Up
+                        Admin {mode === "signup" ? "Sign Up" : "Login"}
                     </motion.h2>
                 </div>
 
@@ -69,14 +79,28 @@ const Login = () => {
                         onChange={(e) => setMobileNumber(e.target.value)}
                         variants={itemVariants}
                     />
-                    <motion.input
-                        className="login-input"
-                        type="text"
-                        placeholder="Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        variants={itemVariants}
-                    />
+
+                    {mode === "signup" && (
+                        <motion.input
+                            className="login-input"
+                            type="text"
+                            placeholder="Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            variants={itemVariants}
+                        />
+                    )}
+                    {mode === "signup" && (
+                        <motion.input
+                            className="login-input"
+                            type="text"
+                            placeholder="Key"
+                            value={key}
+                            onChange={(e) => setKey(e.target.value)}
+                            variants={itemVariants}
+                        />
+                    )}
+
                     <motion.input
                         className="login-input"
                         type="password"
@@ -85,9 +109,10 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         variants={itemVariants}
                     />
+
                     <motion.button
                         type="button"
-                        onClick={handleLogin}
+                        onClick={handleAuth}
                         className="login-button"
                         disabled={loading}
                         variants={itemVariants}
@@ -121,10 +146,21 @@ const Login = () => {
                                 Processing...
                             </span>
                         ) : (
-                            <span>Sign Up</span>
+                            <span>{mode === "signup" ? "Sign Up" : "Login"}</span>
                         )}
                     </motion.button>
                 </form>
+
+                <motion.p
+                    className="login-toggle"
+                    onClick={toggleMode}
+                    variants={itemVariants}
+                    style={{ cursor: "pointer", marginTop: "1rem", color: "#007BFF" }}
+                >
+                    {mode === "signup"
+                        ? "Already have an account? Login"
+                        : "Don't have an account? Sign Up"}
+                </motion.p>
             </motion.div>
         </motion.div>
     );

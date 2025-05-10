@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { useState, createContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -11,17 +10,23 @@ export const AuthContextProvider = ({ children }) => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [mode, setMode] = useState("login"); // "login" or "signup"
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const[key, setKey] = useState("");
+
+    const login = () => setIsAuthenticated(true);
+    const logout = () => setIsAuthenticated(false);
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleAuth = async () => {
         setError("");
 
         if (!mobileNumber) {
             setError("Mobile number is required");
             return;
         }
-        if (!name) {
-            setError("Name is required");
+        if (mode === "signup" && !name) {
+            setError("Name is required for signup");
             return;
         }
         if (!password) {
@@ -36,24 +41,27 @@ export const AuthContextProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:8081/api/admin/create", {
-                mobileNumber,
-                name,
-                password,
-            });
+            const url = mode === "signup"
+                ? "http://localhost:8081/api/admin/signup"
+                : "http://localhost:8081/api/admin/login";
 
+            const payload = mode === "signup"
+                ? { mobileNumber, name, password, secretKey:key} 
+                : { mobileNumber, password };
+
+            const response = await axios.post(url, payload);
             if (response.data) {
-                // Save to localStorage
-                localStorage.setItem("admin", JSON.stringify(response.data));
-
-                // Navigate to home after slight delay for animation
+                localStorage.setItem("signed", response.data);
+                
                 setTimeout(() => {
-                    navigate("/");
+                    
+                    login(); // update context                  
+                    navigate("/admin/dashboard");
                 }, 1000);
             }
         } catch (err) {
-            console.error("Error during login:", err);
-            setError(err.response?.data?.message || "Login failed. Please try again.");
+            console.error("Auth error:", err);
+            setError(err.response?.data?.message || "Authentication failed. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -67,10 +75,15 @@ export const AuthContextProvider = ({ children }) => {
                 password,
                 loading,
                 error,
+                mode,
+                setMode,
                 setMobileNumber,
                 setName,
                 setPassword,
-                handleLogin,
+                handleAuth,
+                isAuthenticated,
+                login, 
+                logout,key,setKey
             }}
         >
             {children}
