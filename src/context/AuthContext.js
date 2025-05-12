@@ -50,9 +50,10 @@ export const AuthContextProvider = ({ children }) => {
                 : { mobileNumber, password };
 
             const response = await axios.post(url, payload);
+
             if (response.data) {
-                localStorage.setItem("signed", response.data);
-                
+                localStorage.setItem("auth id", response.data.id);
+                console.log("id", response.data.id);            
                 setTimeout(() => {
                     
                     login(); // update context                  

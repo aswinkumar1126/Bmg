@@ -16,9 +16,11 @@ import Contact from "../pages/contact/Contact";
 import AllVideos from "../components/AllVideos";
 
 import DashBoard from "../admin/page/dashboard/DashBoard";
-
+import AdminProfile from "../admin/page/profile/AdminProfile";
 
 import ProtectedRoute from "./admin/ProtectedRoute";
+import AddImageSlider from "../admin/page/addImageSlider/AddImageSlider";
+import AddVideo from "../admin/page/addVideo/AddVideo";
 function AppRouter() {
 
 
@@ -42,6 +44,10 @@ function AppRouter() {
             {/* Admin */}
            
             <Route path="/admin/dashboard" element={<ProtectedRoute> <DashBoard /> </ProtectedRoute>} />
+            <Route path="/admin/profile" element={<ProtectedRoute> <AdminProfile /> </ProtectedRoute>} />
+            <Route path="/admin/add-imageSlider" element={ <AddImageSlider />} />
+            <Route path="/admin/add-video" element={<AddVideo />} />
+            
 
         </Routes>
 

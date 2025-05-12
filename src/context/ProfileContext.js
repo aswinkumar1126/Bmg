@@ -12,20 +12,23 @@ export const ProfileProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchProfile();
+        const id = localStorage.getItem('auth id');
+        if (id) {
+            fetchProfile(id);
+        }
     }, []);
-    
-    const fetchProfile = async () => {
-        try {
-        const response = await axiosAdminInstance.get('/getAlladmin');
-            setProfile(response.data);
-            console.log("Fetched Profile:", response.data);
 
+    const fetchProfile = async (id) => {
+        try {
+            const response = await axiosAdminInstance.get(`/getAdmin/${id}`);
+            console.log("Fetched Profile:", response.data);
+            setProfile(response.data);
         } catch (error) {
             console.error('Error fetching profile:', error);
         }
     };
-
+    
+    
     return (
         <ProfileContext.Provider value={{ profile, updateProfile }}>
             {children}

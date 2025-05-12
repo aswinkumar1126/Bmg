@@ -1,11 +1,10 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Head.css';
 import Search from '../../../components/Search';
 import { ProfileContext } from '../../../context/ProfileContext';
-const Head = ({ toggleSidebar, isSidebarOpen }) => {
 
+const Head = ({ toggleSidebar, isSidebarOpen }) => {
     const { profile } = React.useContext(ProfileContext);
-    console.log("Context profile:", profile);
     const [profileOpen, setProfileOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -25,8 +24,13 @@ const Head = ({ toggleSidebar, isSidebarOpen }) => {
         <header className={`header ${scrolled ? 'scrolled' : ''}`}>
             <div className="header-left">
                 <span className="jewelry-name">BMG Jewellers Private Limited</span>
-
+                {profile?.name && (
+                    <div className="user-greeting">
+                        <span>Welcome, {profile.name}</span>
+                    </div>
+                )}
             </div>
+
             <div className="header-center">
                 <button
                     className="hamburger"
@@ -34,11 +38,14 @@ const Head = ({ toggleSidebar, isSidebarOpen }) => {
                     aria-label="Toggle menu"
                     aria-expanded={isSidebarOpen}
                 >
-                    <span className="hamburger-icon">
-                        {isSidebarOpen ? '✕' : '☰'}
-                    </span>
+                    <div className={`hamburger-icon ${isSidebarOpen ? 'open' : ''}`}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </button>
             </div>
+
             <div className="header-right">
                 <div className="search-wrapper">
                     <Search />
