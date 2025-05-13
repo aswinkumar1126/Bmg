@@ -15,12 +15,15 @@
 }
 
 /* Main Content Styles */
-.main-content {
+.dashboard-content {
     margin-left: 0;
     padding: 1.5rem;
     transition: margin-left var(--transition-speed) ease;
-    min-height: calc(100vh - 70px);
+    height: calc(100vh - 60px);
+        /* assuming header height */
+    overflow-y: auto;
     margin-top: 70px;
+    margin-bottom: 50px;
 }
 
 .main-content.sidebar-visible {
@@ -184,7 +187,7 @@
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-    .main-content.sidebar-visible {
+    .dashboard-content.sidebar-visible {
         margin-left: 0;
     }
 }
@@ -200,9 +203,10 @@
 }
 
 @media (max-width: 768px) {
-    .main-content {
+    .dashboard-content {
         padding: 1rem;
         margin-top: 60px;
+        margin-bottom: 130px;
     }
 
     .card {

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import './MainContent.css';
 import {
     FiUsers, FiShoppingCart, FiClock, FiTruck,
@@ -29,7 +29,7 @@ const MainContent = ({ sidebarVisible, onClick }) => {
 
     return (
         <div
-            className={`main-content ${sidebarVisible ? 'sidebar-visible' : ''}`}
+            className={`dashboard-content ${sidebarVisible ? 'sidebar-visible' : ''}`}
             onClick={onClick}
         >
             <div className="dashboard">

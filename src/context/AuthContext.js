@@ -1,6 +1,6 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext , useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate   } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -18,6 +18,14 @@ export const AuthContextProvider = ({ children }) => {
     const logout = () => setIsAuthenticated(false);
     const navigate = useNavigate();
 
+
+    useEffect(() => {
+        const authStatus = localStorage.getItem("auth");
+        if (authStatus === "true") {
+            setIsAuthenticated(true);
+        }
+    }, []);
+    
     const handleAuth = async () => {
         setError("");
 
@@ -52,13 +60,10 @@ export const AuthContextProvider = ({ children }) => {
             const response = await axios.post(url, payload);
 
             if (response.data) {
-                localStorage.setItem("auth id", response.data.id);
-                console.log("id", response.data.id);            
-                setTimeout(() => {
-                    
-                    login(); // update context                  
-                    navigate("/admin/dashboard");
-                }, 1000);
+                localStorage.setItem("auth", "true"); // Set correct key and value
+                localStorage.setItem("auth_id", response.data.id); // Optional: store ID
+                login(); // update context
+                navigate("/admin");
             }
         } catch (err) {
             console.error("Auth error:", err);

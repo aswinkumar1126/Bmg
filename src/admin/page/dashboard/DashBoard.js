@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './DashBoard.css';
 import Header from '../header/Head';
 import Slider from '../slider/Slider';
@@ -7,6 +8,7 @@ import MainContent from '../main/MainContent';
 const DashBoard = () => {
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const checkIfMobile = () => {
@@ -28,6 +30,9 @@ const DashBoard = () => {
         }
     };
 
+    // Show MainContent only if path is "/admin"
+    const showMainContent = location.pathname === '/admin';
+
     return (
         <div className="app">
             <Header
@@ -39,12 +44,16 @@ const DashBoard = () => {
                 sidebarVisible={sidebarVisible}
                 toggleSidebar={toggleSidebar}
                 closeSidebar={closeSidebar}
+               
             />
 
-            <MainContent
-                sidebarVisible={sidebarVisible}
-                onClick={closeSidebar}
-            />
+            {showMainContent && (
+                <MainContent
+                    sidebarVisible={sidebarVisible}
+                    onClick={closeSidebar}
+                   
+                />
+            )}
         </div>
     );
 };
