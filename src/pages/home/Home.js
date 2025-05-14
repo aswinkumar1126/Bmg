@@ -1,72 +1,70 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import ImageSlider from "../slider/ImageSlider";
 import Testimonial from "../testimonial/Testimonial";
-import axiosInstance from "../../api/axios";
+import { useProductContext } from "../../context/ProductContext";
 import AllProducts from "../products/AllProducts";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
-import ErrorComponent from "../../components/ErrorComponent"
-import Videos from "../video/Videos"
-
+import ErrorComponent from "../../components/ErrorComponent";
+import Videos from "../video/Videos";
+import axiosInstance from "../../api/axios";
+import { useVideo } from "../../context/videoContext";
+import "./Home.css";
 function Home() {
-    const [data, setData] = useState({
-        images: [],
-        products: [],
-        videoUrl: null,
-        loading: true,
-        error: null
-    });
+    const [images, setImages] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const fetchAllData = async () => {
+    const { products, loading: productsLoading, error: productsError, getAllProducts } = useProductContext();
+    const { latestVideo, loading: videoLoading, error: videoError, getLatestVideo } = useVideo();
+
+    const fetchAllData = useCallback(async () => {
         try {
-            setData(prev => ({ ...prev, loading: true }));
+            setLoading(true);
+            setError(null);
 
-            // Fetch all data in parallel
-            const [imagesRes, productsRes, videoRes] = await Promise.all([
-                axiosInstance.get("/slider/getAllImage"),
-                axiosInstance.get("/admin/product/product-lists"),
-                axiosInstance.get("/cloudinary/video")
-            ]);
+            const imagesRes = await axiosInstance.get("/slider/getAllImage");
+            setImages(imagesRes.data);
 
-            setData({
-                images: imagesRes.data,
-                products: productsRes.data,
-                videoUrl: videoRes.data,
-                loading: false,
-                error: null
-            });
+            await getAllProducts();
+            await getLatestVideo(); // ✅ Use context method to get latest video
+
         } catch (err) {
             console.error("Error fetching data:", err);
-            setData(prev => ({
-                ...prev,
-                loading: false,
-                error: "Failed to load data. Please try again later."
-            }));
+            setError("Failed to load data. Please try again later.");
+        } finally {
+            setLoading(false);
         }
-    };
+    }, [getAllProducts, getLatestVideo]);
 
     useEffect(() => {
         fetchAllData();
-    }, []);
+    }, [fetchAllData]);
 
-    if (data.error) {
-        return <ErrorComponent error={data.error} onRetry={fetchAllData} />;
+    if (error || productsError || videoError) {
+        return <ErrorComponent error={error || productsError || videoError} onRetry={fetchAllData} />;
     }
 
     return (
-        <div>
+        <div className="home-section">
             <section>
-                <ImageSlider images={data.images} loading={data.loading} />
+                <ImageSlider images={images} loading={loading} />
             </section>
+
             <section className="video-section">
-                <Videos videoUrl={data.videoUrl} loading={data.loading} />
+                <Videos videoUrl={latestVideo} loading={loading || videoLoading} />
             </section>
-            
-            {data.loading ? (
-                <LoadingSkeleton count={6} />
-            ) : (
-                <AllProducts products={data.products} />
-            )}
-            <Testimonial videoUrl={data.videoUrl} loading={data.loading} />
+
+            <section className="all-products-section">
+                {loading || productsLoading ? (
+                    <LoadingSkeleton count={6} />
+                ) : (
+                    <AllProducts products={products} />
+                )}
+            </section>
+
+            <section className="testimonial-section">
+                <Testimonial videoUrl={latestVideo} loading={loading || videoLoading} />
+            </section>
         </div>
     );
 }

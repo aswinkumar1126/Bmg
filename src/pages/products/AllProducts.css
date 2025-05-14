@@ -11,8 +11,11 @@
 
 .product-page {
     padding: 3rem 2rem;
-    background-color: var(--light-gray);
+    background-color: #000000;
+        /* Optional */
     min-height: 100vh;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 .page-header {
@@ -512,6 +515,23 @@
 
     .image-container {
         height: 180px;
+    }
+}
+@media (max-width: 600px) {
+    .product-page {
+        padding: 2rem 1rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .image-container {
+        height: 160px;
+    }
+
+    .product-info {
+        padding: 1rem;
     }
 }
 

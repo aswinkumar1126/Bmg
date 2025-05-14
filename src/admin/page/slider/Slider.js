@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Slider.css';
 import {
-  FiHome, FiGrid, FiLayers, FiImage, FiBox, FiAward, FiDollarSign,
+  FiHome, FiImage, FiBox, FiAward, FiDollarSign,
   FiChevronDown, FiChevronRight, FiPlus, FiList
 } from 'react-icons/fi';
-
+// FiGrid, FiLayers,
 const Slider = ({ sidebarVisible, toggleSidebar, closeSidebar, closeBar }) => {
   const [expandedItems, setExpandedItems] = useState({});
 
   const menuItems = [
     { name: "Dashboard", icon: <FiHome />, hasSubItems: false, path: "/admin" },
-    { name: "Categories", icon: <FiGrid />, hasSubItems: true },
-    { name: "Sub-Categories", icon: <FiLayers />, hasSubItems: true },
+    // { name: "Categories", icon: <FiGrid />, hasSubItems: true },
+    // { name: "Sub-Categories", icon: <FiLayers />, hasSubItems: true },
     { name: "Offer & Banner", icon: <FiImage />, hasSubItems: true },
     { name: "Products", icon: <FiBox />, hasSubItems: true },
     { name: "Videos", icon: <FiAward />, hasSubItems: true },

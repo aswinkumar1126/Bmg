@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "./AllProducts.css";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
 import ErrorComponent from "../../components/ErrorComponent"
-
+import ProductCard from "../../components/ProductCard";
 function AllProducts({ products, loading, error }) {
     const navigate = useNavigate();
 
     if (error) {
         return <ErrorComponent error={error} />;
     }
+    console.log(products);
 
     return (
         <div className="product-page">
@@ -22,46 +23,14 @@ function AllProducts({ products, loading, error }) {
                 {loading ? (
                     <LoadingSkeleton count={6} />
                 ) : (
-                    products.map((product) => (
-                        <div className="product-card" key={product.id}>
-                            <div className="image-container">
-                                {product.productImage?.imageByte ? (
-                                    <img
-                                        src={`data:${product.productImage.imageType || 'image/jpeg'};base64,${product.productImage.imageByte}`}
-                                        alt={product.productName}
-                                        className="product-image"
-                                        loading="lazy"
-                                    />
-                                ) : (
-                                    <div className="image-placeholder">No Image</div>
-                                )}
-                                <div
-                                    className="quick-view"
-                                    onClick={() => navigate(`/product/${product.id}`)}
-                                >
-                                    Quick View
-                                </div>
-                            </div>
-                            <div className="product-info">
-                                <h3 className="product-name">{product.productName}</h3>
-                                <p className="product-price">₹{product.productPrice?.toLocaleString() || 'N/A'}</p>
-                                <div className="product-actions">
-                                    <button
-                                        className="buy-button pulse"
-                                        onClick={() => navigate(`/product/${product.id}`)}
-                                    >
-                                        Add to Cart
-                                    </button>
-                                    <button
-                                        className="wishlist-button heartbeat"
-                                        aria-label="Add to wishlist"
-                                    >
-                                        ♡
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))
+                        products.map((product) => (
+                            <ProductCard
+                                key={product.id}
+                                product={product}
+                                onQuickView={() => navigate(`/product/${product.id}`)}
+                                onAddToCart={() => navigate(`/product/${product.id}`)} // or handle differently
+                            />
+                      ))
                 )}
             </div>
         </div>

@@ -12,5 +12,11 @@ export const axiosAdminInstance = axios.create({
         "Content-Type": "application/json",
     },
 });
+export const axiosInstanceAdmin = axios.create({
+    baseURL: "http://localhost:8081/api/v1",  //BaseURL
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
 
 export default axiosInstance;

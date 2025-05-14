@@ -1,0 +1,131 @@
+/* Basic Style for Silver Rate Card */
+.silver-card {
+    position: relative;
+    width: 80%;
+    max-width: 400px;
+    padding: 1.5rem 2.5rem;
+    border-radius: 16px;
+    background: rgba(240, 240, 240, 0.75);
+    /* Less transparent for better visibility */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    margin: 2rem auto;
+    z-index: 1;
+    transition: transform 0.3s ease;
+    backdrop-filter: none;
+    /* Removed the blur effect */
+}
+
+.silver-card:hover {
+    transform: scale(1.02);
+}
+
+.silver-border-glow {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    background: linear-gradient(135deg, #c0c0c0, #ffffff, #c0c0c0);
+    border-radius: 20px;
+    filter: blur(6px);
+    animation: glowBorder 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowBorder {
+    from {
+        opacity: 0.6;
+        box-shadow: 0 0 10px #c0c0c0;
+    }
+
+    to {
+        opacity: 1;
+        box-shadow: 0 0 20px #ffffff;
+    }
+}
+
+.silver-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #fff;
+    /* Improved contrast: white text for better visibility */
+    font-size: 0.2rem;
+    font-weight: 600;
+    font-family: 'Segoe UI', sans-serif;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    /* Added text shadow for better contrast */
+}
+
+.silver-label,
+.silver-rate {
+    font-size: 1.8rem;
+    /* Slightly larger text for better readability */
+}
+
+.silver-icon {
+    font-size: 2rem;
+}
+
+/* Shimmer Effect */
+.silver-content {
+    background: linear-gradient(90deg, #b0b0b0, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmerText 3s ease-in-out infinite;
+}
+
+/* Adjust the shimmer effect for better visibility */
+@keyframes shimmerText {
+    0% {
+        background-position: 0%;
+    }
+
+    100% {
+        background-position: 100%;
+    }
+}
+
+.silver-rate {
+    font-weight: bold;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .silver-card {
+        width: 90%;
+        padding: 1rem 2rem;
+    }
+
+    .silver-content {
+        font-size: 1.4rem;
+    }
+
+    .silver-icon {
+        font-size: 1.8rem;
+    }
+
+    .silver-rate {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .silver-card {
+        width: 95%;
+        padding: 1rem 1.5rem;
+    }
+
+    .silver-content {
+        font-size: 1.2rem;
+    }
+
+    .silver-icon {
+        font-size: 1.6rem;
+    }
+
+    .silver-rate {
+        font-size: 1.4rem;
+    }
+}

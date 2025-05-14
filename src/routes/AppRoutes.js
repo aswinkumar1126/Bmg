@@ -9,18 +9,21 @@ import Login from "../admin/page/login/Login";
 import Product from "../components/Product";
 import About from "../pages/about/About";
 import Contact from "../pages/contact/Contact";
-import AllVideos from "../components/AllVideos";
+import Video from "../components/Video";
 import PrivateRoute from "./admin/PrivateRoute";
 import Layout from "../admin/layout/Layout";
 
 // Admin pages
 import MainContent from "../admin/page/main/MainContent";
-import AdminProfile from "../admin/page/profile/AdminProfile";
+import AdminProfile from "../admin/page/profile/addProduct/AdminProfile";
 import AddImageSlider from "../admin/page/addImageSlider/AddImageSlider";
-import AddVideo from "../admin/page/addVideo/AddVideo";
-import AddRate from "../admin/page/Rates/AddRate";
-import ManageRate from "../admin/page/Rates/ManageRate";
-import AddProduct from "../admin/page/product/AddProduct";
+
+import AddRate from "../admin/page/Rates/addRate/AddRate";
+import ManageRate from "../admin/page/Rates/manageRate/ManageRate";
+import AddProduct from "../admin/page/product/addProduct/AddProduct"
+import ManageProduct from "../admin/page/product/manageProduct/ManageProduct";
+import AddVideo from "../admin/page/video/addVideo/AddVideo";
+import ManageVideos from "../admin/page/video/manageVideo/ManageVideos";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './AppRoutes.css';
 
@@ -40,7 +43,7 @@ function AppRouter() {
             <Route path="/testimonials" element={<LayoutWrapper><Testimonial /></LayoutWrapper>} />
             <Route path="/about" element={<LayoutWrapper><About /></LayoutWrapper>} />
             <Route path="/contact" element={<LayoutWrapper><Contact /></LayoutWrapper>} />
-            <Route path="/videos" element={<LayoutWrapper><AllVideos /></LayoutWrapper>} />
+            <Route path="/videos" element={<LayoutWrapper><Video /></LayoutWrapper>} />
             <Route path="/products" element={<LayoutWrapper><Product /></LayoutWrapper>} />
             <Route path="/login" element={<Login />} />
 
@@ -58,9 +61,12 @@ function AppRouter() {
                 <Route path="profile" element={<AdminProfile />} />
                 <Route path="offer-&-banner/add" element={<AddImageSlider />} />
                 <Route path="videos/add" element={<AddVideo />} />
+                <Route path="videos/manage" element={<ManageVideos />} />
                 <Route path="rates/add" element={<AddRate />} />
                 <Route path="rates/manage" element={<ManageRate />} />
                 <Route path="products/add" element={<AddProduct />} />
+                <Route path="products/manage" element={<ManageProduct />} />
+
                 {/* Add more nested routes as needed */}
             </Route>
 

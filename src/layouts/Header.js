@@ -10,6 +10,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { FaMoon, FaSun } from 'react-icons/fa';
+//import SilverRate from '../components/rates/silverRate/SilverRate';
 
 function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -19,6 +20,7 @@ function Header() {
     const { theme, toggleTheme } = useTheme();
     const location = useLocation();
 
+ 
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
@@ -105,6 +107,10 @@ function Header() {
                                 <FaEnvelope /> websupport@justdial.com
                             </motion.a>
                         </div>
+                    </div>
+                    <div>
+                        {/* Pass silver rate as prop
+                        <SilverRate rate={silverRate} /> */}
                     </div>
 
                     <div className="top-social-links">

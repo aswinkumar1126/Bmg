@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRate } from '../../../context/RateContext';
+import { useRate } from '../../../../context/RateContext';
 import { FaEdit, FaSave, FaTimes, FaCoins, FaUser, FaHistory, FaExclamationCircle, FaCheckCircle } from 'react-icons/fa';
 import './ManageRate.css';
 

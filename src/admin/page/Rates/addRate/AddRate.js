@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { useRate } from '../../../context/RateContext';
-import { ProfileContext } from '../../../context/ProfileContext';
+import { useRate } from '../../../../context/RateContext';
+import { ProfileContext } from '../../../../context/ProfileContext';
 import { FaCoins, FaUserEdit, FaWeightHanging, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 import './AddRate.css';
 

@@ -1,0 +1,19 @@
+/* home.css */
+.home-section {
+    padding: 0;
+    margin: 0;
+}
+
+/* Remove extra bottom spacing from AllProducts section */
+.all-products-section {
+    margin-bottom: 0;
+    padding-bottom: 1rem;
+    /* adjust as needed */
+}
+
+/* Remove extra top spacing from Testimonial section */
+.testimonial-section {
+    margin-top: 0;
+    padding-top: 2rem;
+    /* or less */
+}

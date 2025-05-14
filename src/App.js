@@ -7,6 +7,10 @@ import { AuthContextProvider } from "../src/context/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import { ProfileProvider } from "./context/ProfileContext";
 import { RateProvider } from "./context/RateContext"; // No need to import useRate here
+import { ProductProvider } from "./context/ProductContext";
+import { VideoProvider } from "./context/videoContext";
+
+
 
 function App() {
   return (
@@ -16,7 +20,15 @@ function App() {
           <AuthContextProvider>
             <ProfileProvider>
               <RateProvider>
+                <ProductProvider skipInitialFetch={true}>
+                  <VideoProvider>
+
+
                 <AppRoutes />
+
+
+                  </VideoProvider>
+                </ProductProvider>
               </RateProvider>
             </ProfileProvider>
           </AuthContextProvider>

@@ -37,7 +37,8 @@
 }
 
 .header.scrolled {
-    background-color: rgba(26, 26, 46, 0.95);
+    background: linear-gradient(90deg, #d9f0ed 0%, #59e7e7 100%);
+    color: var(--text-color);
     backdrop-filter: blur(8px);
     box-shadow: var(--elevation-3);
     height: 60px;
@@ -54,12 +55,14 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    
 }
 
 .brand-icon {
     font-size: 1.5rem;
     color: var(--highlight-color);
     transition: transform 0.3s ease;
+    color: var(--primary-color);
 }
 
 .jewelry-name {
@@ -190,6 +193,7 @@
     background-color: var(--secondary-color);
     border-radius: var(--border-radius);
     box-shadow: var(--elevation-3);
+
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);

@@ -1,6 +1,7 @@
 /* Base Styles */
 .testimonial-section {
-    padding: 4rem 0;
+    top: 0;
+    padding: 2rem 0;
     background-color: #f9fafc;
     position: relative;
     overflow: hidden;
