@@ -16,6 +16,7 @@
     min-height: 100vh;
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+    
 }
 
 .page-header {
@@ -56,6 +57,7 @@
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 2rem;
     padding: 0 1rem;
+    
 }
 
 /* Product Card */
@@ -68,6 +70,7 @@
     will-change: transform;
     opacity: 0;
     animation: cardAppear 0.6s forwards;
+    
 }
 
 .product-card:nth-child(1) {

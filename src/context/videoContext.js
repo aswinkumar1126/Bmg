@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
-//import axiosInstanceAdmin from '../api/axios';
-import axios from 'axios';
+import * as videoService from '../services/video/videoService';
+
 export const VideoContext = createContext();
 export const useVideo = () => useContext(VideoContext);
 
@@ -10,15 +10,14 @@ export const VideoProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const baseURL = 'http://localhost:8081/api/v1';
     const getAllVideos = useCallback(async () => {
         setLoading(true);
+        setError(null);
         try {
-            const response = await axios.get(`${baseURL}/cloudinary/all-videos`);
-            setVideos(response.data);
-            console.log(response.data);
+            const data = await videoService.getAllVideos();
+            setVideos(data);
         } catch (err) {
-            setError("Error fetching videos: " + err.message);
+            setError(err.message);
         } finally {
             setLoading(false);
         }
@@ -26,77 +25,82 @@ export const VideoProvider = ({ children }) => {
 
     const getLatestVideo = useCallback(async () => {
         setLoading(true);
+        setError(null);
         try {
-            const response = await axios.get(`${baseURL}/cloudinary/video`);
-            setLatestVideo(response.data);
+            const data = await videoService.getLatestVideo();
+            setLatestVideo(data);
         } catch (err) {
-            setError("Error fetching latest video: " + err.message);
+            setError(err.message);
         } finally {
             setLoading(false);
         }
     }, []);
 
-    const uploadVideo = useCallback(async (file, videoName) => {
-        setLoading(true);
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('videoName', videoName);
+    const uploadVideo = useCallback(
+        async (file, videoName) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const videoUrl = await videoService.uploadVideo(file, videoName);
+                setLatestVideo(videoUrl);
+                await getAllVideos();
+                return videoUrl;
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [getAllVideos]
+    );
 
-        try {
-            const response = await axios.post(`${baseURL}/cloudinary/upload`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            });
-            const videoUrl = response.data;
-            setLatestVideo(videoUrl);
-            await getAllVideos();
-            return videoUrl;
-        } catch (err) {
-            setError("Error uploading video: " + err.message);
-        } finally {
-            setLoading(false);
-        }
-    }, [getAllVideos]);
+    const updateVideo = useCallback(
+        async (id, videoName, url) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const updated = await videoService.updateVideo(id, videoName, url);
+                await getAllVideos();
+                return updated;
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [getAllVideos]
+    );
 
-    const updateVideo = useCallback(async (id, videoName, url) => {
-        setLoading(true);
-        try {
-            const response = await axios.put(`${baseURL}/cloudinary/${id}`, { videoName, url });
-            await getAllVideos();
-            return response.data;
-        } catch (err) {
-            setError("Error updating video: " + err.message);
-        } finally {
-            setLoading(false);
-        }
-    }, [getAllVideos]);
-
-    const deleteVideo = useCallback(async (id) => {
-        setLoading(true);
-        try {
-            const response = await axios.delete(`${baseURL}/cloudinary/${id}`);
-            setVideos(prev => prev.filter(video => video.id !== id));
-            return response.data;
-        } catch (err) {
-            setError("Error deleting video: " + err.message);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+    const deleteVideo = useCallback(
+        async (id) => {
+            setLoading(true);
+            setError(null);
+            try {
+                await videoService.deleteVideo(id);
+                setVideos((prev) => prev.filter((video) => video.id !== id));
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        },
+        []
+    );
 
     return (
-        <VideoContext.Provider value={{
-            videos,
-            latestVideo,
-            loading,
-            error,
-            getAllVideos,
-            getLatestVideo,
-            uploadVideo,
-            updateVideo,
-            deleteVideo,
-        }}>
+        <VideoContext.Provider
+            value={{
+                videos,
+                latestVideo,
+                loading,
+                error,
+                getAllVideos,
+                getLatestVideo,
+                uploadVideo,
+                updateVideo,
+                deleteVideo,
+            }}
+        >
             {children}
         </VideoContext.Provider>
     );

@@ -9,7 +9,7 @@ import { ProfileProvider } from "./context/ProfileContext";
 import { RateProvider } from "./context/RateContext"; // No need to import useRate here
 import { ProductProvider } from "./context/ProductContext";
 import { VideoProvider } from "./context/videoContext";
-
+import { ImageSliderProvider } from "./context/imageSliderContext";
 
 
 function App() {
@@ -22,11 +22,11 @@ function App() {
               <RateProvider>
                 <ProductProvider skipInitialFetch={true}>
                   <VideoProvider>
-
+                    <ImageSliderProvider>
 
                 <AppRoutes />
 
-
+                    </ImageSliderProvider>
                   </VideoProvider>
                 </ProductProvider>
               </RateProvider>

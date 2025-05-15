@@ -6,7 +6,7 @@ import AllProducts from "../products/AllProducts";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
 import ErrorComponent from "../../components/ErrorComponent";
 import Videos from "../video/Videos";
-import axiosInstance from "../../api/axios";
+import { axiosInstanceAdmin } from "../../api/axios";
 import { useVideo } from "../../context/videoContext";
 import "./Home.css";
 function Home() {
@@ -22,7 +22,7 @@ function Home() {
             setLoading(true);
             setError(null);
 
-            const imagesRes = await axiosInstance.get("/slider/getAllImage");
+            const imagesRes = await axiosInstanceAdmin.get("/slider/getAllImage");
             setImages(imagesRes.data);
 
             await getAllProducts();
@@ -45,7 +45,7 @@ function Home() {
     }
 
     return (
-        <div className="home-section">
+        <div className="home-section" >
             <section>
                 <ImageSlider images={images} loading={loading} />
             </section>

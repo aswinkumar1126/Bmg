@@ -332,13 +332,14 @@ html {
 
 /* Navigation */
 .nav-links {
-    background-color: var(--nav-bg);
+    
     height: var(--nav-height);
     display: flex;
     align-items: center;
     justify-content: center;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: #bad8f7;
 }
 
 .nav-list {
@@ -349,6 +350,7 @@ html {
     gap: 1.5rem;
     height: 100%;
     align-items: center;
+    background-color: #e9f3ff;
 }
 
 .nav-list li {
@@ -356,6 +358,7 @@ html {
     height: 100%;
     display: flex;
     align-items: center;
+    
 }
 
 .nav-list li a {

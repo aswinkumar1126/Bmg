@@ -12,12 +12,11 @@ import Contact from "../pages/contact/Contact";
 import Video from "../components/Video";
 import PrivateRoute from "./admin/PrivateRoute";
 import Layout from "../admin/layout/Layout";
-
 // Admin pages
 import MainContent from "../admin/page/main/MainContent";
-import AdminProfile from "../admin/page/profile/addProduct/AdminProfile";
-import AddImageSlider from "../admin/page/addImageSlider/AddImageSlider";
-
+import AdminProfile from "../admin/page/profile/ProfilePage";
+import AddImageSlider from "../admin/page/imageSlider/addImageSlider/AddImageSlider";
+import ManageImageSlider from "../admin/page/imageSlider/manageImageSlider/manageImageSlider";
 import AddRate from "../admin/page/Rates/addRate/AddRate";
 import ManageRate from "../admin/page/Rates/manageRate/ManageRate";
 import AddProduct from "../admin/page/product/addProduct/AddProduct"
@@ -26,6 +25,7 @@ import AddVideo from "../admin/page/video/addVideo/AddVideo";
 import ManageVideos from "../admin/page/video/manageVideo/ManageVideos";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './AppRoutes.css';
+import ProductDetails from "../pages/productDetails/productDetails";
 
 function AppRouter() {
     const location = useLocation();
@@ -45,6 +45,7 @@ function AppRouter() {
             <Route path="/contact" element={<LayoutWrapper><Contact /></LayoutWrapper>} />
             <Route path="/videos" element={<LayoutWrapper><Video /></LayoutWrapper>} />
             <Route path="/products" element={<LayoutWrapper><Product /></LayoutWrapper>} />
+            <Route path="/product/:id" element={<LayoutWrapper><ProductDetails /></LayoutWrapper>} />
             <Route path="/login" element={<Login />} />
 
             {/* Protected Admin Routes with Layout */}
@@ -66,6 +67,8 @@ function AppRouter() {
                 <Route path="rates/manage" element={<ManageRate />} />
                 <Route path="products/add" element={<AddProduct />} />
                 <Route path="products/manage" element={<ManageProduct />} />
+                <Route path="offer-&-banner/manage" element={<ManageImageSlider />} />
+
 
                 {/* Add more nested routes as needed */}
             </Route>

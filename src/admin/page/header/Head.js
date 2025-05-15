@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { FiUser, FiLogOut, FiKey, FiMenu, FiX } from 'react-icons/fi';
+import { FiUser, FiLogOut,  FiMenu, FiX } from 'react-icons/fi';
 import { FaGem } from 'react-icons/fa';
 import './Head.css';
 import Search from '../../../components/Search';
 import { ProfileContext } from '../../../context/ProfileContext';
-import { useLocation } from 'react-router-dom';
-
+import { NavLink, useLocation } from 'react-router-dom';
+//FiKey,
 const Head = ({ toggleSidebar, isSidebarOpen }) => {
     const { profile } = useContext(ProfileContext);
     const [profileOpen, setProfileOpen] = useState(false);
@@ -106,14 +106,12 @@ const Head = ({ toggleSidebar, isSidebarOpen }) => {
                                 </div>
                             )}
                             <ul>
-                                <li>
-                                    <FiUser className="dropdown-icon" />
-                                    <span>Profile</span>
-                                </li>
-                                <li>
+                                <NavLink to="/admin/profile"> <li> <FiUser className="dropdown-icon" /> <span>Profile</span> </li>
+                                {/* <li>
                                     <FiKey className="dropdown-icon" />
                                     <span>Change Password</span>
-                                </li>
+                                </li> */}
+                                </NavLink> 
                                 <li>
                                     <FiLogOut className="dropdown-icon" />
                                     <span>Logout</span>

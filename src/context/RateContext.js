@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axiosInstance from '../api/axios'; // Assuming axiosInstance is your axios setup
+import * as rateService from '../services/rate/rateService'; // import all as rateService
 
 const RateContext = createContext();
 
@@ -8,77 +8,86 @@ const RateProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch rates for display
-    const fetchRates = async () => {
-        setLoading(true); // Set loading true when fetching
+    // Fetch rates with optional pagination support
+    const fetchRates = async (page = 1, limit = 10) => {
+        setLoading(true);
+        setError(null);
         try {
-            const response = await axiosInstance.get('/rates');  // Adjust your API endpoint
-            setRates(response.data); // Assuming API returns an array of rates
+            const data = await rateService.fetchRates(page, limit);
+            setRates(data.data || data);  // If paginated, use data.data, else use data
         } catch (err) {
-            setError('Error fetching rates');
+            setError(err.message || 'Error fetching rates');
         } finally {
-            setLoading(false); // Set loading false after the request finishes
+            setLoading(false);
         }
     };
 
-    // Add new rate (POST) with rate data
+    // Add a new rate
     const addRate = async (newRate) => {
-        setLoading(true); // Set loading true while adding the rate
+        setLoading(true);
+        setError(null);
         try {
-            const rateData = {
-                
-                goldRate: newRate.goldRate,
-                silverRate: newRate.silverRate,
-                createdBy: newRate.createdBy,
-                // Optional: add createdBy if needed
-            };
-            const response = await axiosInstance.post('/rate', rateData);
-            setRates((prevRates) => [...prevRates, response.data]); // Add new rate to list
-            return Promise.resolve(response.data); // Resolve the promise on success
+            const addedRate = await rateService.addRate(newRate);
+            setRates(prev => [...prev, addedRate]);
+            return addedRate;
         } catch (err) {
-            setError('Error adding rate');
-            return Promise.reject(err); // Reject the promise on error
+            setError(err.message || 'Error adding rate');
+            throw err;
         } finally {
-            setLoading(false); // Set loading false after the request finishes
+            setLoading(false);
         }
     };
 
-    // Update rate (PUT)
+    // Update a rate by ID
     const updateRate = async (id, updatedRate) => {
-        setLoading(true); // Set loading true while updating the rate
+        setLoading(true);
+        setError(null);
         try {
-            const rateData = {
-                goldRate: updatedRate.goldRate,
-                silverRate: updatedRate.silverRate,
-                createdBy: updatedRate.createdBy, // Optional: add createdBy if needed
-            };
-            const response = await axiosInstance.put(`/rate/${id}`, rateData);  // PUT to the correct API endpoint
-            const updatedRates = rates.map(rate =>
-                rate.id === id ? response.data : rate
-            );
-            setRates(updatedRates); // Update the rate in state
-            return Promise.resolve(response.data); // Resolve the promise on success
+            const updated = await rateService.updateRate(id, updatedRate);
+            setRates(prev => prev.map(rate => (rate.id === id ? updated : rate)));
+            return updated;
         } catch (err) {
-            alert('Error updating rate');
-            return Promise.reject(err); // Reject the promise on error
+            setError(err.message || 'Error updating rate');
+            throw err;
         } finally {
-            setLoading(false); // Set loading false after the request finishes
+            setLoading(false);
+        }
+    };
+
+    // Delete a rate by ID
+    const deleteRate = async (id) => {
+        setLoading(true);
+        setError(null);
+        try {
+            await rateService.deleteRate(id);
+            setRates(prev => prev.filter(rate => rate.id !== id));
+        } catch (err) {
+            setError(err.message || 'Error deleting rate');
+            throw err;
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchRates();  // Fetch rates on component mount
+        fetchRates();
     }, []);
 
     return (
-        <RateContext.Provider value={{ rates, loading, error, addRate, updateRate, fetchRates }}>
+        <RateContext.Provider value={{
+            rates,
+            loading,
+            error,
+            fetchRates,
+            addRate,
+            updateRate,
+            deleteRate
+        }}>
             {children}
         </RateContext.Provider>
     );
 };
 
-const useRate = () => {
-    return useContext(RateContext);
-};
+const useRate = () => useContext(RateContext);
 
 export { RateProvider, useRate };

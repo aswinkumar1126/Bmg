@@ -26,8 +26,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--primary-color);
-    color: var(--text-color);
+    background-color: #e7faf4;
+    color: var(--secondary-color);
     padding: 0 2rem;
     height: var(--header-height);
     z-index: 1000;
@@ -38,7 +38,7 @@
 
 .header.scrolled {
     background: linear-gradient(90deg, #d9f0ed 0%, #59e7e7 100%);
-    color: var(--text-color);
+    color: black;
     backdrop-filter: blur(8px);
     box-shadow: var(--elevation-3);
     height: 60px;
@@ -60,15 +60,15 @@
 
 .brand-icon {
     font-size: 1.5rem;
-    color: var(--highlight-color);
+    color: #615004;
     transition: transform 0.3s ease;
     color: var(--primary-color);
 }
 
 .jewelry-name {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 600;
-    color: var(--text-color);
+    color: #ffd000;
     letter-spacing: 0.5px;
     white-space: nowrap;
     transition: all var(--transition-speed) ease;
@@ -110,7 +110,7 @@
     align-items: center;
     justify-content: center;
     transition: all var(--transition-speed) ease;
-    color: var(--text-color);
+    color: rgb(31, 92, 55);
     border-radius: var(--border-radius);
 }
 
@@ -154,7 +154,11 @@
     transition: all var(--transition-speed) ease;
 }
 
-.profile.active .profile-icon {
+.profile-icon{
+    color: #16213e;
+    
+}
+.profile.active  {
     background-color: var(--highlight-color);
     box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.3);
 }
@@ -167,7 +171,7 @@
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
-    color: var(--text-color);
+    color: black;
     font-weight: 600;
     transition: all var(--transition-speed) ease;
 }
@@ -247,6 +251,7 @@
     font-size: 0.95rem;
     transition: all var(--transition-speed) ease;
     cursor: pointer;
+    color: var(--text-color);
 }
 
 .dropdown-icon {

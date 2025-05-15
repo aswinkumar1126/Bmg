@@ -5,93 +5,71 @@ import React, {
     useState,
     useCallback,
 } from "react";
-import axios from "axios";
+import { productService } from "../services/product/productService";
 
-// Create context
 const ProductContext = createContext();
 
-// Provider component
 export const ProductProvider = ({ children, skipInitialFetch = false }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [productDetail, setProductDetail] = useState(null); // Single product state
+    const [productDetail, setProductDetail] = useState(null);
 
-    // Memoized GET all products
+    // ✅ GET all products
     const getAllProducts = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get("http://localhost:8081/api/v1/getAllProducts");
-            setProducts(response.data);
-            console.log(response.data);
+            const data = await productService.getAllProducts(); // ✅ Correct method
+            setProducts(data);
+            console.log(data);
         } catch (err) {
             setError("Failed to fetch products. Please try again later.");
             console.error(err);
         } finally {
             setLoading(false);
         }
-    }, []); // No dependencies — safe and stable
+    }, []);
 
-    // GET product by ID
-    const getProductById = async (id) => {
+    // ✅ GET product by ID
+    const getProductById = useCallback(async (id) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`http://localhost:8081/api/v1/getProduct/${id}`);
-            setProductDetail(response.data);
+            const data = await productService.getProductById(id); // ✅ Correct method
+            console.log("Single product:", data);
+            setProductDetail(data);
         } catch (err) {
             setError("Failed to fetch product. Please try again later.");
             console.error(err);
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
-    // POST: Create new product
+    // ✅ CREATE product
     const createProduct = async (formData) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.post("http://localhost:8081/api/v1/createProduct", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            setProducts((prev) => [...prev, response.data]);
+            const data = await productService.createProduct(formData); // ✅ Correct method
+            setProducts((prev) => [...prev, data]);
         } catch (err) {
             setError("Failed to create product. Please try again.");
-            throw err; // Allow the caller (AddProduct) to handle it
+            throw err;
         } finally {
             setLoading(false);
         }
     };
-    // PUT: Update product
+
+    // ✅ UPDATE product
     const updateProduct = async (id, updatedData) => {
         setLoading(true);
         setError(null);
         try {
-            const formData = new FormData();
-            formData.append("productName", updatedData.productName);
-            formData.append("productWeight", updatedData.productWeight);
-            formData.append("productPrice", updatedData.productPrice);
-            formData.append("productDescription", updatedData.productDescription);
-
-            // Only include image if available
-            if (updatedData.image instanceof File) {
-                formData.append("image", updatedData.image);
-            }
-
-            const response = await axios.put(
-                `http://localhost:8081/api/v1/updateProduct/${id}`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-
+            const data = await productService.updateProduct(id, updatedData); // ✅ Correct method
             setProducts((prev) =>
-                prev.map((prod) => (prod.id === id ? response.data : prod))
+                prev.map((prod) => (prod.id === id ? data : prod))
             );
         } catch (err) {
             setError("Failed to update product. Please try again.");
@@ -100,14 +78,13 @@ export const ProductProvider = ({ children, skipInitialFetch = false }) => {
             setLoading(false);
         }
     };
-    
 
-    // DELETE: Remove product
+    // ✅ DELETE product
     const deleteProduct = async (id) => {
         setLoading(true);
         setError(null);
         try {
-            await axios.delete(`http://localhost:8081/api/v1/removeProduct/${id}`);
+            await productService.deleteProduct(id); // ✅ Correct method
             setProducts((prev) => prev.filter((prod) => prod.id !== id));
         } catch (err) {
             setError("Failed to delete product. Please try again.");
@@ -117,7 +94,6 @@ export const ProductProvider = ({ children, skipInitialFetch = false }) => {
         }
     };
 
-    // Initial data fetch
     useEffect(() => {
         if (!skipInitialFetch) {
             getAllProducts();
@@ -143,7 +119,5 @@ export const ProductProvider = ({ children, skipInitialFetch = false }) => {
     );
 };
 
-// Custom hook
 export const useProductContext = () => useContext(ProductContext);
-
 export default ProductContext;

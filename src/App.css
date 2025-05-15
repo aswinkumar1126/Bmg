@@ -11,7 +11,7 @@
 
 /* Header area (can be moved to Header.css if needed) */
 .header {
-    background-color: var(--white);
+    background-color: var(--text-primary);
     box-shadow: var(--box-shadow);
     position: sticky;
     top: 0;

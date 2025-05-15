@@ -1,6 +1,6 @@
-import React, { useState, createContext , useEffect } from "react";
-import axios from "axios";
-import { useNavigate   } from "react-router-dom";
+import React, { useState, createContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { signupAdmin, loginAdmin } from "../services/profile/profileService"; // adjust path if needed
 
 export const AuthContext = createContext();
 
@@ -8,16 +8,21 @@ export const AuthContextProvider = ({ children }) => {
     const [mobileNumber, setMobileNumber] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [key, setKey] = useState(""); // for signup secretKey
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [mode, setMode] = useState("login"); // "login" or "signup"
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const[key, setKey] = useState("");
 
-    const login = () => setIsAuthenticated(true);
-    const logout = () => setIsAuthenticated(false);
     const navigate = useNavigate();
 
+    const login = () => setIsAuthenticated(true);
+    const logout = () => {
+        setIsAuthenticated(false);
+        localStorage.removeItem("auth");
+        localStorage.removeItem("auth_id");
+        navigate("/admin-auth");
+    };
 
     useEffect(() => {
         const authStatus = localStorage.getItem("auth");
@@ -25,10 +30,11 @@ export const AuthContextProvider = ({ children }) => {
             setIsAuthenticated(true);
         }
     }, []);
-    
+
     const handleAuth = async () => {
         setError("");
 
+        // Validation
         if (!mobileNumber) {
             setError("Mobile number is required");
             return;
@@ -49,25 +55,29 @@ export const AuthContextProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            const url = mode === "signup"
-                ? "http://localhost:8081/api/admin/signup"
-                : "http://localhost:8081/api/admin/login";
+            let responseData;
 
-            const payload = mode === "signup"
-                ? { mobileNumber, name, password, secretKey:key} 
-                : { mobileNumber, password };
+            if (mode === "signup") {
+                const payload = {
+                    mobileNumber,
+                    name,
+                    password,
+                    secretKey: key,
+                };
+                responseData = await signupAdmin(payload);
+            } else {
+                responseData = await loginAdmin(mobileNumber, password);
+            }
 
-            const response = await axios.post(url, payload);
-
-            if (response.data) {
-                localStorage.setItem("auth", "true"); // Set correct key and value
-                localStorage.setItem("auth_id", response.data.id); // Optional: store ID
-                login(); // update context
+            if (responseData) {
+                localStorage.setItem("auth", "true");
+                localStorage.setItem("auth_id", responseData.id);
+                login();
                 navigate("/admin");
             }
         } catch (err) {
             console.error("Auth error:", err);
-            setError(err.response?.data?.message || "Authentication failed. Please try again.");
+            setError(err?.response?.data?.message || "Authentication failed. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -79,17 +89,19 @@ export const AuthContextProvider = ({ children }) => {
                 mobileNumber,
                 name,
                 password,
+                key,
+                mode,
                 loading,
                 error,
-                mode,
-                setMode,
+                isAuthenticated,
                 setMobileNumber,
                 setName,
                 setPassword,
+                setKey,
+                setMode,
                 handleAuth,
-                isAuthenticated,
-                login, 
-                logout,key,setKey
+                login,
+                logout,
             }}
         >
             {children}

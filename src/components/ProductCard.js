@@ -64,7 +64,7 @@ function ProductCard({ product, onQuickView, onAddToCart, onAddToWishlist }) {
                         ₹{product.productPrice?.toLocaleString() || 'N/A'}
                     </span>
                 </div>
-                <div className="product-card__rating">
+                {/* <div className="product-card__rating">
                     {[...Array(5)].map((_, i) => (
                         <span
                             key={i}
@@ -75,7 +75,7 @@ function ProductCard({ product, onQuickView, onAddToCart, onAddToWishlist }) {
                         </span>
                     ))}
                     <span className="product-card__review-count">({product.reviewCount || 0})</span>
-                </div>
+                </div> */}
                 <button
                     className="product-card__add-to-cart"
                     onClick={onAddToCart}

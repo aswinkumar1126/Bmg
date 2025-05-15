@@ -11,13 +11,24 @@ const Login = () => {
         loading,
         error,
         mode,
-        setMode,
+        key,
         setMobileNumber,
         setName,
         setPassword,
+        setKey,
+        setMode,
         handleAuth,
-        key,setKey
     } = useContext(AuthContext);
+
+    const isSignup = mode === "signup";
+
+    const toggleMode = () => {
+        setMode(isSignup ? "login" : "signup");
+        setMobileNumber("");
+        setName("");
+        setPassword("");
+        setKey("");
+    };
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -42,14 +53,6 @@ const Login = () => {
         },
     };
 
-    const toggleMode = () => {
-        setMode(mode === "login" ? "signup" : "login");
-        setMobileNumber("");
-        setName("");
-        setPassword("");
-        setKey("");
-    };
-
     return (
         <motion.div
             className="login-container"
@@ -60,7 +63,7 @@ const Login = () => {
             <motion.div className="login-card" variants={itemVariants}>
                 <div className="text-center">
                     <motion.h2 className="login-title" variants={itemVariants}>
-                        Admin {mode === "signup" ? "Sign Up" : "Login"}
+                        Admin {isSignup ? "Sign Up" : "Login"}
                     </motion.h2>
                 </div>
 
@@ -70,35 +73,44 @@ const Login = () => {
                     </motion.div>
                 )}
 
-                <form className="login-form">
+                <form
+                    className="login-form"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleAuth();
+                    }}
+                >
                     <motion.input
                         className="login-input"
-                        type="text"
+                        type="tel"
                         placeholder="Mobile Number"
                         value={mobileNumber}
                         onChange={(e) => setMobileNumber(e.target.value)}
                         variants={itemVariants}
+                        required
                     />
 
-                    {mode === "signup" && (
-                        <motion.input
-                            className="login-input"
-                            type="text"
-                            placeholder="Name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            variants={itemVariants}
-                        />
-                    )}
-                    {mode === "signup" && (
-                        <motion.input
-                            className="login-input"
-                            type="text"
-                            placeholder="Key"
-                            value={key}
-                            onChange={(e) => setKey(e.target.value)}
-                            variants={itemVariants}
-                        />
+                    {isSignup && (
+                        <>
+                            <motion.input
+                                className="login-input"
+                                type="text"
+                                placeholder="Name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                variants={itemVariants}
+                                required
+                            />
+                            <motion.input
+                                className="login-input"
+                                type="text"
+                                placeholder="Secret Key"
+                                value={key}
+                                onChange={(e) => setKey(e.target.value)}
+                                variants={itemVariants}
+                                required
+                            />
+                        </>
                     )}
 
                     <motion.input
@@ -108,19 +120,22 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         variants={itemVariants}
+                        required
+                        minLength={6}
                     />
 
                     <motion.button
-                        type="button"
-                        onClick={handleAuth}
+                        type="submit"
                         className="login-button"
                         disabled={loading}
                         variants={itemVariants}
                         whileHover={!loading ? { scale: 1.02 } : {}}
                         whileTap={!loading ? { scale: 0.98 } : {}}
+                        aria-busy={loading}
+                        role="button"
                     >
                         {loading ? (
-                            <span className="flex items-center">
+                            <span className="loading-spinner">
                                 <svg
                                     className="spinner"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -143,10 +158,10 @@ const Login = () => {
                                         d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4zm2 5.29A7.96 7.96 0 014 12H0c0 3.04 1.13 5.82 3 7.94l3-2.65z"
                                     />
                                 </svg>
-                                Processing...
+                                &nbsp;Processing...
                             </span>
                         ) : (
-                            <span>{mode === "signup" ? "Sign Up" : "Login"}</span>
+                            <span>{isSignup ? "Sign Up" : "Login"}</span>
                         )}
                     </motion.button>
                 </form>
@@ -157,7 +172,7 @@ const Login = () => {
                     variants={itemVariants}
                     style={{ cursor: "pointer", marginTop: "1rem", color: "#007BFF" }}
                 >
-                    {mode === "signup"
+                    {isSignup
                         ? "Already have an account? Login"
                         : "Don't have an account? Sign Up"}
                 </motion.p>
