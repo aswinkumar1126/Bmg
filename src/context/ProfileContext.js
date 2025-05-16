@@ -15,6 +15,8 @@ export const ProfileProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     // Fetch profile by id from localStorage or param
+
+
     const fetchProfile = useCallback(async (id) => {
         setLoading(true);
         try {

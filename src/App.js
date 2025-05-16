@@ -10,9 +10,13 @@ import { RateProvider } from "./context/RateContext"; // No need to import useRa
 import { ProductProvider } from "./context/ProductContext";
 import { VideoProvider } from "./context/videoContext";
 import { ImageSliderProvider } from "./context/imageSliderContext";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
+
+  const queryClient = new QueryClient();
+
   return (
     <div>
       <BrowserRouter>
@@ -23,9 +27,10 @@ function App() {
                 <ProductProvider skipInitialFetch={true}>
                   <VideoProvider>
                     <ImageSliderProvider>
-
+                      <QueryClientProvider client={queryClient || new QueryClient()}>
                 <AppRoutes />
-
+                        <ReactQueryDevtools initialIsOpen={false} />
+                      </QueryClientProvider>
                     </ImageSliderProvider>
                   </VideoProvider>
                 </ProductProvider>

@@ -1,49 +1,84 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useTestimonials } from '../../store/testimonial/useTestimonialsQueries';
 import './Testimonial.css';
 
 const Testimonial = () => {
-   
+    const { data: testimonials = [] } = useTestimonials();
+    const trackRef = useRef(null);
 
-    const testimonials = [
-        {
-            quote: "This product has truly exceeded my expectations! The quality is top-notch and the customer service is amazing.",
-            name: "John Doe",
-            role: "CEO, Company"
-        },
-        {
-            quote: "Incredible experience. I will definitely be back for more. Highly recommend!",
-            name: "Jane Smith",
-            role: "Marketing Specialist"
-        },
-        {
-            quote: "The best service I've ever experienced. Fast delivery and excellent quality products.",
-            name: "Robert Johnson",
-            role: "Product Manager"
-        }
-    ];
+    useEffect(() => {
+        if (!trackRef.current) return;
+
+        const track = trackRef.current;
+        const cards = Array.from(track.children);
+
+        // Duplicate cards for seamless looping
+        cards.forEach(card => {
+            const clone = card.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            track.appendChild(clone);
+        });
+
+        // Pause animation on hover
+        const handleMouseEnter = () => {
+            track.style.animationPlayState = 'paused';
+        };
+
+        const handleMouseLeave = () => {
+            track.style.animationPlayState = 'running';
+        };
+
+        track.addEventListener('mouseenter', handleMouseEnter);
+        track.addEventListener('mouseleave', handleMouseLeave);
+
+        return () => {
+            track.removeEventListener('mouseenter', handleMouseEnter);
+            track.removeEventListener('mouseleave', handleMouseLeave);
+        };
+    }, [testimonials]);
 
     return (
-        <section className="testimonial-section">
-            <div className="container">
-                <header className="section-header">
-                    <h2>Client Testimonials</h2>
-                    <p className="section-subtitle">Hear what our customers say about us</p>
+        <section className="testimonial-section" aria-label="Client testimonials">
+            <div className="testimonial-container">
+                <header className="testimonial-header">
+                    <h2 className="testimonial-title">Client Testimonials</h2>
+                    <p className="testimonial-subtitle">What our valued clients say about us</p>
                 </header>
 
-
-                <div className="testimonial-grid">
-                    {testimonials.map((testimonial, index) => (
-                        <div key={index} className="testimonial-card">
-                            <div className="quote-icon">“</div>
-                            <blockquote className="testimonial-text">
-                                {testimonial.quote}
-                            </blockquote>
-                            <div className="testimonial-meta">
-                                <h4 className="testimonial-name">{testimonial.name}</h4>
-                                <p className="testimonial-role">{testimonial.role}</p>
+                <div className="testimonial-marquee-container">
+                    <div className="testimonial-track" ref={trackRef}>
+                        {testimonials.map((testimonial, index) => (
+                            <div key={index} className="testimonial-card">
+                                <div className="testimonial-content">
+                                    <div className="quote-icon">“</div>
+                                    <blockquote className="testimonial-text">
+                                        {testimonial.message}
+                                    </blockquote>
+                                    <div className="testimonial-author">
+                                        <div className="testimonial-avatar">
+                                            <img
+                                                src={testimonial.imageUrl}
+                                                alt={testimonial.name}
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                        </div>
+                                        <div className="testimonial-meta">
+                                            <h3 className="testimonial-name">{testimonial.name}</h3>
+                                            <p className="testimonial-role">{testimonial.designation}</p>
+                                            <div className="testimonial-rating">
+                                                {Array(5).fill().map((_, i) => (
+                                                    <span key={i} className={`star ${i < testimonial.rating ? 'filled' : ''}`}>
+                                                        ★
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

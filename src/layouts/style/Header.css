@@ -42,7 +42,7 @@ html {
 
 .header-container {
     width: 100%;
-    background-color: var(--bg-primary);
+    background :#ffffff;
     font-family: 'Poppins', sans-serif;
     box-shadow: var(--box-shadow);
     position: sticky;
@@ -54,11 +54,11 @@ html {
 .header-container.scrolled {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(8px);
-    background-color: rgba(255, 255, 255, 0.98);
+    background-color: rgb(248, 230, 196);
 }
 
 [data-theme="dark"] .header-container.scrolled {
-    background-color: rgba(26, 26, 26, 0.98);
+    background-color: rgb(255, 152, 92);
 }
 
 /* Top Bar - Enhanced for Tablet Visibility */
@@ -201,7 +201,6 @@ html {
 .main-header-content {
     width: 100%;
     max-width: 1400px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -237,7 +236,7 @@ html {
     color: var(--text-color);
     line-height: 0.8;
     white-space: pre-wrap;
-    background: linear-gradient(to right, #d4af37, #f5d062, #d4af37);
+    background: linear-gradient(to right, #064858, #fd8700, #9d05b1);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -247,10 +246,10 @@ html {
 }
 
 .sub-logotext {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 400;
     letter-spacing: 1px;
-    color: var(--secondary-color);
+    background: linear-gradient(to right, #bde7f1, #ff8800, #e380f0);
     -webkit-text-fill-color: initial;
     background: none;
     animation: none;
@@ -265,7 +264,7 @@ html {
 /* Search Bar */
 .search-bar-wrapper {
     flex: 1;
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 1rem;
     position: relative;
     z-index: 10;
@@ -339,9 +338,11 @@ html {
     justify-content: center;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    background-color: #bad8f7;
+    background: #f5b048;
 }
-
+.nav-links.scrolled {
+    background: linear-gradient(to right, #cde2e7, #fff0d1, #cde2e7);
+}
 .nav-list {
     display: flex;
     list-style: none;
@@ -350,7 +351,6 @@ html {
     gap: 1.5rem;
     height: 100%;
     align-items: center;
-    background-color: #e9f3ff;
 }
 
 .nav-list li {

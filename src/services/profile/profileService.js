@@ -27,8 +27,6 @@ export const getAdminById = async (id) => {
 
 // UPDATED updateAdmin to send multipart/form-data with JSON string + optional imageFile
 export const updateAdmin = async (id, updatedData) => {
-    // updatedData = { admin: {...}, imageFile: File | null }
-
     const formData = new FormData();
     formData.append('admin', JSON.stringify(updatedData.admin));
 
@@ -36,10 +34,15 @@ export const updateAdmin = async (id, updatedData) => {
         formData.append('imageFile', updatedData.imageFile);
     }
 
-    const response = await axiosInstanceAdmin.put(`admin/modify/${id}`, formData);
+    const response = await axiosInstanceAdmin.put(`admin/modify/${id}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
 
     return response.data;
 };
+
 
 export const deleteAdmin = async (id) => {
     const response = await axiosInstanceAdmin.delete(`admin/delete/${id}`);

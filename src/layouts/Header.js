@@ -1,5 +1,5 @@
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import Logo from '../assets/images/header/logo.png';
+import Logo from '../assets/images/header/weblogo.png';
 import Search from '../components/Search';
 import React, { useEffect, useState } from 'react';
 import './style/Header.css';
@@ -10,7 +10,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { FaMoon, FaSun } from 'react-icons/fa';
-//import SilverRate from '../components/rates/silverRate/SilverRate';
+
 
 function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -204,7 +204,7 @@ function Header() {
             </div>
 
             {/* Navigation */}
-            <nav className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
+            <nav className={`nav-links ${isMobileMenuOpen ? 'active' : ''} ${isScrolled ? 'scrolled' : ''}`} >
                 <ul className="nav-list">
                     {navItems.map((item) => (
                         <li

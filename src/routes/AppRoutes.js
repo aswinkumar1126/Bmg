@@ -9,7 +9,7 @@ import Login from "../admin/page/login/Login";
 import Product from "../components/Product";
 import About from "../pages/about/About";
 import Contact from "../pages/contact/Contact";
-import Video from "../components/Video";
+import AllVideos from "../components/AllVideo";
 import PrivateRoute from "./admin/PrivateRoute";
 import Layout from "../admin/layout/Layout";
 // Admin pages
@@ -43,7 +43,7 @@ function AppRouter() {
             <Route path="/testimonials" element={<LayoutWrapper><Testimonial /></LayoutWrapper>} />
             <Route path="/about" element={<LayoutWrapper><About /></LayoutWrapper>} />
             <Route path="/contact" element={<LayoutWrapper><Contact /></LayoutWrapper>} />
-            <Route path="/videos" element={<LayoutWrapper><Video /></LayoutWrapper>} />
+            <Route path="/videos" element={<LayoutWrapper><AllVideos /></LayoutWrapper>} />
             <Route path="/products" element={<LayoutWrapper><Product /></LayoutWrapper>} />
             <Route path="/product/:id" element={<LayoutWrapper><ProductDetails /></LayoutWrapper>} />
             <Route path="/login" element={<Login />} />

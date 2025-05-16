@@ -19,7 +19,7 @@ const ProfilePage = () => {
     const fileInputRef = useRef(null);
 
     useEffect(() => {
-        const id = localStorage.getItem("auth id");
+        const id = localStorage.getItem("auth_id");
         if (id) fetchProfile(id);
     }, [fetchProfile]);
 
@@ -33,6 +33,14 @@ const ProfilePage = () => {
         }
     }, [profile]);
 
+    useEffect(() => {
+        return () => {
+            if (previewImage?.startsWith("blob:")) {
+                URL.revokeObjectURL(previewImage);
+            }
+        };
+    }, [previewImage]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -41,7 +49,7 @@ const ProfilePage = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            if (file.size > 2 * 1024 * 1024) { // 2MB limit
+            if (file.size > 2 * 1024 * 1024) {
                 alert("Image size should be less than 2MB");
                 return;
             }
@@ -104,33 +112,35 @@ const ProfilePage = () => {
             </div>
 
             <div className="profile-content">
-                <div className="profile-image-section">
-                    {previewImage ? (
-                        <div className="image-wrapper">
-                            <img
-                                src={
-                                    previewImage.startsWith("http")
-                                        ? previewImage
-                                        : `http://localhost:8080/images/${previewImage}`
-                                }
-                                alt="Admin"
-                                className={`profile-image ${isEditing ? "editable" : ""}`}
+                <div className="profile-image-container">
+                    <div className="profile-image-wrapper">
+                        {previewImage ? (
+                            <div className="image-container">
+                                <img
+                                    src={
+                                        previewImage?.startsWith("http") || previewImage?.startsWith("blob:")
+                                            ? previewImage
+                                            : `http://localhost:8080/api/v1/admin/profile/images/${previewImage}`
+                                    }
+                                    alt="Admin"
+                                    className={`profile-image ${isEditing ? "editable" : ""}`}
+                                    onClick={openFilePicker}
+                                />
+                                {isEditing && (
+                                    <div className="image-overlay" onClick={openFilePicker}>
+                                        <span className="edit-icon">✏️</span>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div
+                                className={`no-image ${isEditing ? "editable" : ""}`}
                                 onClick={openFilePicker}
-                            />
-                            {isEditing && (
-                                <div className="image-overlay" onClick={openFilePicker}>
-                                    <span className="edit-icon">✏️</span>
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <div
-                            className={`no-image ${isEditing ? "editable" : ""}`}
-                            onClick={openFilePicker}
-                        >
-                            <span>+ Add Photo</span>
-                        </div>
-                    )}
+                            >
+                                <span>+ Add Photo</span>
+                            </div>
+                        )}
+                    </div>
 
                     <input
                         type="file"
@@ -196,7 +206,7 @@ const ProfilePage = () => {
                         <div className="form-group">
                             <label htmlFor="registeredAt">Registered At</label>
                             <p className="readonly-value">
-                                {new Date(profile.registeredAt).toLocaleDateString('en-US', {
+                                {new Date(profile.registerAt).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',

@@ -1,8 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef,  useState } from 'react';
 import './Videos.css';
 import CustomButton from '../../components/Button';
 import LoadingSkeleton from '../../components/LoadingSkeleton';
 import ErrorComponent from '../../components/ErrorComponent'
+
 
 function Videos({ videoUrl, loading, error, onRetry }) {
     const videoRef = useRef(null);
@@ -11,12 +12,9 @@ function Videos({ videoUrl, loading, error, onRetry }) {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
 
-    // Handle video loading and error states
-    useEffect(() => {
-        if (videoRef.current && videoUrl && !loading && !error) {
-            videoRef.current.load();
-        }
-    }, [videoUrl, loading, error]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error fetching products</p>;
 
     const togglePlay = () => {
         if (videoRef.current) {

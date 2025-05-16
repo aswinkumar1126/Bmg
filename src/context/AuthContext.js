@@ -25,7 +25,7 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const authStatus = localStorage.getItem("auth");
+        const authStatus = localStorage.getItem("auth_id");
         if (authStatus === "true") {
             setIsAuthenticated(true);
         }
@@ -71,7 +71,8 @@ export const AuthContextProvider = ({ children }) => {
 
             if (responseData) {
                 localStorage.setItem("auth", "true");
-                localStorage.setItem("auth_id", responseData.id);
+                localStorage.setItem("auth_id", responseData.admin.id);
+                console.log(responseData.admin.id);
                 login();
                 navigate("/admin");
             }

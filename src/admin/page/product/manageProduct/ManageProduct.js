@@ -1,48 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useProductContext } from "../../../../context/ProductContext";
 import styles from "./ManageProduct.module.css";
 import { FiEdit, FiSave, FiTrash2, FiX } from "react-icons/fi";
+import { useProducts } from "../../../../store/product/useProductQueries";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ManageProduct = () => {
-    const { products, getAllProducts, updateProduct, deleteProduct } = useProductContext();
-    const [editIndex, setEditIndex] = useState(null);
-    const [editedData, setEditedData] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const { updateProduct, deleteProduct } = useProductContext(); // Context methods to update/delete
+    const { data } = useProducts(); // Fetch product data
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            setIsLoading(true);
-            try {
-                await getAllProducts();
-            } catch (err) {
-                setError("Failed to fetch products");
-                console.error(err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchProducts();
-    }, [getAllProducts]);
+    const products = data || []; // Safely access actual product array
+    console.log(products);
+    const queryClient = useQueryClient(); // Query client to refresh data after update/delete
+
+    const [editIndex, setEditIndex] = useState(null); // Which product is being edited
+    const [editedData, setEditedData] = useState({}); // Data currently being edited
+    const [isLoading, setIsLoading] = useState(false); // Loading state
+    const [error, setError] = useState(null); // Error handling
 
     const handleEditClick = (index, product) => {
-        setEditIndex(index);
-        setEditedData({ ...product });
+        setEditIndex(index); // Set edit mode for selected row
+        setEditedData({ ...product }); // Copy product data to edit state
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setEditedData((prev) => ({ ...prev, [name]: value }));
+        const { name, value } = e.target; // Get changed field name and value
+        setEditedData((prev) => ({ ...prev, [name]: value })); // Update state dynamically
     };
 
     const handleSave = async (id) => {
         setIsLoading(true);
         try {
-            await updateProduct(id, editedData);
-            setEditIndex(null);
-            setError(null);
+            await updateProduct(id, editedData); // Call context update
+            await queryClient.invalidateQueries(["products"]); // Refresh data
+            setEditIndex(null); // Exit edit mode
+            setError(null); // Clear error
         } catch (err) {
-            setError("Failed to update product");
+            setError("Failed to update product"); // Show error message
             console.error("Update failed:", err);
         } finally {
             setIsLoading(false);
@@ -53,7 +47,8 @@ const ManageProduct = () => {
         if (window.confirm("Are you sure you want to delete this product?")) {
             setIsLoading(true);
             try {
-                await deleteProduct(id);
+                await deleteProduct(id); // Call context delete
+                await queryClient.invalidateQueries(["products"]); // Refresh data
                 setError(null);
             } catch (err) {
                 setError("Failed to delete product");
@@ -65,11 +60,11 @@ const ManageProduct = () => {
     };
 
     const handleCancel = () => {
-        setEditIndex(null);
+        setEditIndex(null); // Cancel editing
         setEditedData({});
     };
 
-    if (isLoading && !editIndex) {
+    if (isLoading && editIndex === null) {
         return <div className={styles.loading}>Loading products...</div>;
     }
 
@@ -96,13 +91,13 @@ const ManageProduct = () => {
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody style={{ overflow: "auto" ,color:"black"}}>
+                    <tbody style={{ overflow: "auto", color: "black" }}>
                         {products.length > 0 ? (
                             products.map((prod, index) => (
                                 <tr key={prod.id}>
                                     <td>
                                         <img
-                                            src={prod.image_url}
+                                            src={prod.image_url} // Adjusted from image_url to imageUrl
                                             alt={prod.productName}
                                             className={styles.image}
                                             onError={(e) => {

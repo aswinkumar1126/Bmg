@@ -1,29 +1,22 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './style/AllVideos.css';
 import CustomButton from './Button';
-import LoadingSkeleton from './LoadingSkeleton';
-import ErrorComponent from './ErrorComponent';
-import { useVideo } from '../context/videoContext';
+import { useAllVideos } from '../store/video/useVideoQueries';
 
 function AllVideos({ onRetry }) {
     const {
-        videos,
-        loading,
+        data: videos = [],
+        isLoading,
         error,
-        getAllVideos
-    } = useVideo();
+        refetch
+    } = useAllVideos();
 
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
-
     const videoRef = useRef(null);
-
-    useEffect(() => {
-        getAllVideos();
-    }, [getAllVideos]);
 
     useEffect(() => {
         if (videoRef.current && videos.length > 0) {
@@ -33,11 +26,7 @@ function AllVideos({ onRetry }) {
 
     const togglePlay = () => {
         if (videoRef.current) {
-            if (isPlaying) {
-                videoRef.current.pause();
-            } else {
-                videoRef.current.play();
-            }
+            isPlaying ? videoRef.current.pause() : videoRef.current.play();
             setIsPlaying(!isPlaying);
         }
     };
@@ -81,16 +70,12 @@ function AllVideos({ onRetry }) {
             </header>
 
             <div className="video-content">
-                {loading ? (
-                    <div className="video-loading-state">
-                        <LoadingSkeleton count={1} />
-                    </div>
+                {isLoading ? (
+                    <p>Loading videos...</p> // Replace with <LoadingSkeleton count={1} /> if available
                 ) : error ? (
                     <div className="video-error-state">
-                        <ErrorComponent
-                            error={error}
-                            onRetry={onRetry || getAllVideos}
-                        />
+                        <p>Error loading videos.</p>
+                        <CustomButton onClick={onRetry || refetch} label="Retry" />
                     </div>
                 ) : videos.length > 0 ? (
                     <div className="video-player-container">
@@ -107,7 +92,7 @@ function AllVideos({ onRetry }) {
                                 onTimeUpdate={handleTimeUpdate}
                                 onLoadedMetadata={handleLoadedMetadata}
                             >
-                                <source src={videos[currentVideoIndex].url} type="video/mp4" />
+                                <source src={videos[currentVideoIndex]?.url} type="video/mp4" />
                                 Your browser does not support HTML5 video.
                             </video>
 

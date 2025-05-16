@@ -1,27 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { useProductContext } from "../../context/ProductContext";
 import ErrorComponent from "../../components/ErrorComponent";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
 import "./ProductDetails.css";
+import { useProductById } from "../../store/product/useProductQueries";
 
 const ProductDetails = () => {
     const { id } = useParams();
     const {
-        productDetail,
-        loading,
-        error,
-        getProductById,
-    } = useProductContext();
+        data: productDetail,
+        isLoading,
+        isError,
+        error
+    } = useProductById(id);
 
-    useEffect(() => {
-        if (id) {
-            getProductById(id);
-        }
-    }, [id, getProductById]);
-
-    if (error) return <ErrorComponent error={error} />;
-    if (loading || !productDetail) return <LoadingSkeleton count={1} type="details" />;
+    if (isError) return <ErrorComponent error={error} />;
+    if (isLoading || !productDetail) return <LoadingSkeleton count={1} type="details" />;
 
     return (
         <div className="product-details-container">

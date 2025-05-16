@@ -40,7 +40,7 @@ const Head = ({ toggleSidebar, isSidebarOpen }) => {
     }, [location.pathname]);
 
     return (
-        <header className={`header ${scrolled ? 'scrolled' : ''}`}>
+        <header className={`header ${scrolled ? 'scrolled' : ''}`} style={{ backgroundColor:"#ffdea0"}}>
             <div className="header-left">
                 <div className="brand">
                     <FaGem className="brand-icon" />

@@ -1,117 +1,65 @@
-import React, {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    useCallback,
-} from "react";
+// context/ProductContext.js
+import React, { createContext, useContext, useState } from "react";
 import { productService } from "../services/product/productService";
 
 const ProductContext = createContext();
 
-export const ProductProvider = ({ children, skipInitialFetch = false }) => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
+export const ProductProvider = ({ children }) => {
     const [error, setError] = useState(null);
-    const [productDetail, setProductDetail] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    // ✅ GET all products
-    const getAllProducts = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const data = await productService.getAllProducts(); // ✅ Correct method
-            setProducts(data);
-            console.log(data);
-        } catch (err) {
-            setError("Failed to fetch products. Please try again later.");
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    // ✅ GET product by ID
-    const getProductById = useCallback(async (id) => {
-        setLoading(true);
-        setError(null);
-        try {
-            const data = await productService.getProductById(id); // ✅ Correct method
-            console.log("Single product:", data);
-            setProductDetail(data);
-        } catch (err) {
-            setError("Failed to fetch product. Please try again later.");
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    // ✅ CREATE product
+    // ✅ CREATE
     const createProduct = async (formData) => {
         setLoading(true);
         setError(null);
         try {
-            const data = await productService.createProduct(formData); // ✅ Correct method
-            setProducts((prev) => [...prev, data]);
+            const data = await productService.createProduct(formData);
+            return data;
         } catch (err) {
-            setError("Failed to create product. Please try again.");
+            setError("Failed to create product.");
             throw err;
         } finally {
             setLoading(false);
         }
     };
 
-    // ✅ UPDATE product
+    // ✅ UPDATE
     const updateProduct = async (id, updatedData) => {
         setLoading(true);
         setError(null);
         try {
-            const data = await productService.updateProduct(id, updatedData); // ✅ Correct method
-            setProducts((prev) =>
-                prev.map((prod) => (prod.id === id ? data : prod))
-            );
+            const data = await productService.updateProduct(id, updatedData);
+            return data;
         } catch (err) {
-            setError("Failed to update product. Please try again.");
-            console.error(err);
+            setError("Failed to update product.");
+            throw err;
         } finally {
             setLoading(false);
         }
     };
 
-    // ✅ DELETE product
+    // ✅ DELETE
     const deleteProduct = async (id) => {
         setLoading(true);
         setError(null);
         try {
-            await productService.deleteProduct(id); // ✅ Correct method
-            setProducts((prev) => prev.filter((prod) => prod.id !== id));
+            await productService.deleteProduct(id);
         } catch (err) {
-            setError("Failed to delete product. Please try again.");
-            console.error(err);
+            setError("Failed to delete product.");
+            throw err;
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
-        if (!skipInitialFetch) {
-            getAllProducts();
-        }
-    }, [skipInitialFetch, getAllProducts]);
-
     return (
         <ProductContext.Provider
             value={{
-                products,
-                productDetail,
-                loading,
-                error,
-                getAllProducts,
-                getProductById,
                 createProduct,
                 updateProduct,
                 deleteProduct,
+                loading,
+                error,
             }}
         >
             {children}
@@ -120,4 +68,3 @@ export const ProductProvider = ({ children, skipInitialFetch = false }) => {
 };
 
 export const useProductContext = () => useContext(ProductContext);
-export default ProductContext;

@@ -2,14 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./AllProducts.css";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
-import ErrorComponent from "../../components/ErrorComponent"
+import ErrorComponent from "../../components/ErrorComponent";
 import ProductCard from "../../components/ProductCard";
-function AllProducts({ products, loading, error }) {
+
+function AllProducts({ products = [], loading, error }) {
     const navigate = useNavigate();
 
     if (error) {
         return <ErrorComponent error={error} />;
     }
+
     console.log(products);
 
     return (
@@ -23,14 +25,14 @@ function AllProducts({ products, loading, error }) {
                 {loading ? (
                     <LoadingSkeleton count={6} />
                 ) : (
-                        products.map((product) => (
-                            <ProductCard
-                                key={product.id}
-                                product={product}
-                                onQuickView={() => navigate(`/product/${product.id}`)}
-                                onAddToCart={() => navigate(`/product/${product.id}`)} // or handle differently
-                            />
-                      ))
+                    (products ?? []).map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            onQuickView={() => navigate(`/product/${product.id}`)}
+                            onAddToCart={() => navigate(`/product/${product.id}`)}
+                        />
+                    ))
                 )}
             </div>
         </div>

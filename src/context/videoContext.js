@@ -1,3 +1,4 @@
+// context/VideoContext.js
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import * as videoService from '../services/video/videoService';
 
@@ -5,36 +6,8 @@ export const VideoContext = createContext();
 export const useVideo = () => useContext(VideoContext);
 
 export const VideoProvider = ({ children }) => {
-    const [videos, setVideos] = useState([]);
-    const [latestVideo, setLatestVideo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
-    const getAllVideos = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const data = await videoService.getAllVideos();
-            setVideos(data);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    const getLatestVideo = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const data = await videoService.getLatestVideo();
-            setLatestVideo(data);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
 
     const uploadVideo = useCallback(
         async (file, videoName) => {
@@ -42,8 +15,6 @@ export const VideoProvider = ({ children }) => {
             setError(null);
             try {
                 const videoUrl = await videoService.uploadVideo(file, videoName);
-                setLatestVideo(videoUrl);
-                await getAllVideos();
                 return videoUrl;
             } catch (err) {
                 setError(err.message);
@@ -51,7 +22,7 @@ export const VideoProvider = ({ children }) => {
                 setLoading(false);
             }
         },
-        [getAllVideos]
+        []
     );
 
     const updateVideo = useCallback(
@@ -60,7 +31,6 @@ export const VideoProvider = ({ children }) => {
             setError(null);
             try {
                 const updated = await videoService.updateVideo(id, videoName, url);
-                await getAllVideos();
                 return updated;
             } catch (err) {
                 setError(err.message);
@@ -68,7 +38,7 @@ export const VideoProvider = ({ children }) => {
                 setLoading(false);
             }
         },
-        [getAllVideos]
+        []
     );
 
     const deleteVideo = useCallback(
@@ -77,7 +47,6 @@ export const VideoProvider = ({ children }) => {
             setError(null);
             try {
                 await videoService.deleteVideo(id);
-                setVideos((prev) => prev.filter((video) => video.id !== id));
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -90,12 +59,8 @@ export const VideoProvider = ({ children }) => {
     return (
         <VideoContext.Provider
             value={{
-                videos,
-                latestVideo,
                 loading,
                 error,
-                getAllVideos,
-                getLatestVideo,
                 uploadVideo,
                 updateVideo,
                 deleteVideo,
