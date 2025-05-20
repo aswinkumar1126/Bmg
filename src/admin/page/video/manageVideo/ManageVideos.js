@@ -1,19 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import { useVideo } from '../../../../context/videoContext';
-import { FaEdit, FaSave, FaTimes, FaTrashAlt, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import React, { useState } from 'react';
+import {
+    useAllVideos,
+} from '../../../../store/video/useVideoQueries';
+import {
+    updateVideo,
+    deleteVideo
+} from '../../../../services/video/videoService';
+import {
+    useMutation,
+    useQueryClient
+} from '@tanstack/react-query';
+import {
+    FaEdit, FaSave, FaTimes, FaTrashAlt,
+    FaCheckCircle, FaExclamationCircle
+} from 'react-icons/fa';
 import styles from './ManageVideos.module.css';
 
 const ManageVideo = () => {
-    const { videos, updateVideo, deleteVideo, loading, error, getAllVideos } = useVideo();
+    const { data: videos = [], isLoading, error } = useAllVideos();
+    const queryClient = useQueryClient();
+
     const [editingId, setEditingId] = useState(null);
     const [editedVideoName, setEditedVideoName] = useState('');
     const [localError, setLocalError] = useState('');
     const [success, setSuccess] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    useEffect(() => {
-        getAllVideos();
-    }, [getAllVideos]);
+    const updateMutation = useMutation({
+        mutationFn: ({ id, videoName, url }) => updateVideo(id, videoName, url),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['videos']);
+            setSuccess('Video updated successfully');
+            setTimeout(() => {
+                setEditingId(null);
+                setSuccess('');
+            }, 2000);
+        },
+        onError: (error) => {
+            setLocalError(error.message || 'Failed to update video');
+        },
+        onSettled: () => {
+            setIsSubmitting(false);
+        },
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: (id) => deleteVideo(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['videos']);
+            setSuccess('Video deleted successfully');
+            setTimeout(() => setSuccess(''), 2000);
+        },
+        onError: (error) => {
+            setLocalError(error.message || 'Failed to delete video');
+        },
+    });
 
     const handleEdit = (video) => {
         setEditingId(video.id);
@@ -36,32 +77,13 @@ const ManageVideo = () => {
         }
 
         setIsSubmitting(true);
-        setLocalError('');
-        setSuccess('');
-
-        try {
-            await updateVideo(id, editedVideoName, videos.find(v => v.id === id).url);
-            setSuccess('Video updated successfully');
-            setTimeout(() => {
-                setEditingId(null);
-                setSuccess('');
-            }, 2000);
-        } catch (err) {
-            setLocalError(err.message || 'Failed to update video');
-        } finally {
-            setIsSubmitting(false);
-        }
+        const video = videos.find(v => v.id === id);
+        updateMutation.mutate({ id, videoName: editedVideoName, url: video.url });
     };
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this video?')) {
-            try {
-                await deleteVideo(id);
-                setSuccess('Video deleted successfully');
-                setTimeout(() => setSuccess(''), 2000);
-            } catch (err) {
-                setLocalError(err.message || 'Failed to delete video');
-            }
+            deleteMutation.mutate(id);
         }
     };
 
@@ -72,6 +94,7 @@ const ManageVideo = () => {
         }
         return url;
     };
+
 
     return (
         <div className={styles.container}>
@@ -93,7 +116,7 @@ const ManageVideo = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
+                        {isLoading ? (
                             <tr>
                                 <td colSpan="4" className={styles.loadingRow}>
                                     <div className={styles.loadingContent}>

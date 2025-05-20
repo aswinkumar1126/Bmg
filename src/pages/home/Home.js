@@ -17,21 +17,7 @@ function Home() {
     const { data: products, isLoading: productsLoading, isError: productsError } = useProducts();
     const { data: latestVideo, isLoading: videoLoading, isError: videoError } = useLatestVideo();
 
-    //console.log("banners",banners);
-    // useEffect(() => {
-    //     const fetchSliderImages = async () => {
-    //         try {
-    //             const res = await axiosInstanceAdmin.get("/slider/getAllImage");
-    //             setImages(res.data);
-    //         } catch (err) {
-    //             console.error("Slider Fetch Error:", err);
-    //             setSliderError("Unable to load slider images.");
-    //         } finally {
-    //             setSliderLoading(false);
-    //         }
-    //     };
-    //     fetchSliderImages();
-    // }, []);
+
 
     const hasError = productsError || videoError || bannersError;
 

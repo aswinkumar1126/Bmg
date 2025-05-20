@@ -3,12 +3,12 @@
 import { axiosInstanceAdmin } from "../../api/axios";
 
 export const signupAdmin = async (adminData) => {
-    const response = await axiosInstanceAdmin.post(`admin/signup`, adminData);
+    const response = await axiosInstanceAdmin.post('/admin/signup', adminData);
     return response.data;
 };
 
 export const loginAdmin = async (mobileNumber, password) => {
-    const response = await axiosInstanceAdmin.post(`admin/login`, {
+    const response = await axiosInstanceAdmin.post('/admin/login', {
         mobileNumber,
         password,
     });
@@ -16,13 +16,18 @@ export const loginAdmin = async (mobileNumber, password) => {
 };
 
 export const getAllAdmins = async () => {
-    const response = await axiosInstanceAdmin.get('admin/getAllAdmin');
+    const response = await axiosInstanceAdmin.get('/admin/getAllAdmin');
     return response.data;
 };
 
 export const getAdminById = async (id) => {
-    const response = await axiosInstanceAdmin.get(`admin/getAdmin/${id}`);
-    return response.data;
+    try {
+        const response = await axiosInstanceAdmin.get(`/admin/getAdmin/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching profile:", error);
+        throw error;
+    }
 };
 
 // UPDATED updateAdmin to send multipart/form-data with JSON string + optional imageFile
@@ -34,7 +39,7 @@ export const updateAdmin = async (id, updatedData) => {
         formData.append('imageFile', updatedData.imageFile);
     }
 
-    const response = await axiosInstanceAdmin.put(`admin/modify/${id}`, formData, {
+    const response = await axiosInstanceAdmin.put(`/admin/modify/${id}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
@@ -45,6 +50,6 @@ export const updateAdmin = async (id, updatedData) => {
 
 
 export const deleteAdmin = async (id) => {
-    const response = await axiosInstanceAdmin.delete(`admin/delete/${id}`);
+    const response = await axiosInstanceAdmin.delete(`/admin/delete/${id}`);
     return response.data;
 };

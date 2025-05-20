@@ -34,7 +34,6 @@ export const AuthContextProvider = ({ children }) => {
     const handleAuth = async () => {
         setError("");
 
-        // Validation
         if (!mobileNumber) {
             setError("Mobile number is required");
             return;
@@ -70,9 +69,12 @@ export const AuthContextProvider = ({ children }) => {
             }
 
             if (responseData) {
-                localStorage.setItem("auth", "true");
+                const token = responseData.admin_token; // ✅ make sure backend sends this
+
+                // ✅ Store token and admin id
+                localStorage.setItem("admin_token", token);
                 localStorage.setItem("auth_id", responseData.admin.id);
-                console.log(responseData.admin.id);
+
                 login();
                 navigate("/admin");
             }
@@ -83,6 +85,7 @@ export const AuthContextProvider = ({ children }) => {
             setLoading(false);
         }
     };
+    
 
     return (
         <AuthContext.Provider

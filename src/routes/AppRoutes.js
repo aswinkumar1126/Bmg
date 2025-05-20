@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Home from "../pages/home/Home";
 import ImageSlider from "../pages/slider/ImageSlider";
@@ -10,7 +10,7 @@ import Product from "../components/Product";
 import About from "../pages/about/About";
 import Contact from "../pages/contact/Contact";
 import AllVideos from "../components/AllVideo";
-import PrivateRoute from "./admin/PrivateRoute";
+//import PrivateRoute from "./admin/PrivatedRoute";
 import Layout from "../admin/layout/Layout";
 // Admin pages
 import MainContent from "../admin/page/main/MainContent";
@@ -34,10 +34,14 @@ function AppRouter() {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, [location.pathname]);
 
+    // No token check here for routes — token check is in PrivateRoute component
+
     return (
         <Routes>
+            {/* Root redirect to home (no auto redirect to admin) */}
+            <Route path="/" element={<Navigate to="/home" replace />} />
+
             {/* Public Routes */}
-            <Route path="/" element={<LayoutWrapper><Home /></LayoutWrapper>} />
             <Route path="/home" element={<LayoutWrapper><Home /></LayoutWrapper>} />
             <Route path="/image-slider" element={<LayoutWrapper><ImageSlider /></LayoutWrapper>} />
             <Route path="/testimonials" element={<LayoutWrapper><Testimonial /></LayoutWrapper>} />
@@ -46,15 +50,15 @@ function AppRouter() {
             <Route path="/videos" element={<LayoutWrapper><AllVideos /></LayoutWrapper>} />
             <Route path="/products" element={<LayoutWrapper><Product /></LayoutWrapper>} />
             <Route path="/product/:id" element={<LayoutWrapper><ProductDetails /></LayoutWrapper>} />
+
+            {/* Login Route — always show login, no redirect */}
             <Route path="/login" element={<Login />} />
 
-            {/* Protected Admin Routes with Layout */}
+            {/* Protected Admin Routes */}
             <Route
                 path="/admin"
-                element={
-                    <PrivateRoute>
+                element={                
                         <Layout />
-                    </PrivateRoute>
                 }
             >
                 <Route index element={<MainContent />} />
@@ -68,9 +72,6 @@ function AppRouter() {
                 <Route path="products/add" element={<AddProduct />} />
                 <Route path="products/manage" element={<ManageProduct />} />
                 <Route path="offer-&-banner/manage" element={<ManageImageSlider />} />
-
-
-                {/* Add more nested routes as needed */}
             </Route>
 
             {/* Not Found */}

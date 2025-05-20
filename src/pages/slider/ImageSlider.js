@@ -41,16 +41,10 @@ function ImageSlider({ images, loading, error }) {
     const renderSlideContent = (img, index) => {
         const imgSrc = img?.image || img?.bannerImagePath || img;
         const altText = img?.alt || img?.title || `Slide ${index + 1}`;
-        const targetLink = img?.link || "#";
 
         return (
             <div key={index} className="slide">
-                <a
-                    href={targetLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={altText}
-                >
+               
                     <figure className="slide-figure">
                         <div className="image-wrapper">
                             <img
@@ -69,7 +63,7 @@ function ImageSlider({ images, loading, error }) {
                             </figcaption>
                         )}
                     </figure>
-                </a>
+               
             </div>
         );
     };

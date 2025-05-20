@@ -28,7 +28,7 @@ function App() {
                   <VideoProvider>
                     <ImageSliderProvider>
                       <QueryClientProvider client={queryClient || new QueryClient()}>
-                <AppRoutes />
+                             <AppRoutes />
                         <ReactQueryDevtools initialIsOpen={false} />
                       </QueryClientProvider>
                     </ImageSliderProvider>

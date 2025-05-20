@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style/CustomButton.css';
 
 const CustomButton = ({
@@ -7,34 +8,45 @@ const CustomButton = ({
     type = 'button',
     disabled = false,
     className = '',
-    variant = 'primary', // 'primary', 'secondary', or 'text'
+    variant = 'primary', // 'primary', 'secondary', 'text'
     size = 'medium', // 'small', 'medium', 'large'
-    icon = null, // Optional icon component
-    isLoading = false
+    icon = null,
+    isLoading = false,
+    ariaLabel = null
 }) => {
     return (
         <button
             type={type}
             onClick={onClick}
             disabled={disabled || isLoading}
-            className={`custom-button 
-        ${variant} 
-        ${size} 
-        ${className} 
-        ${disabled ? 'disabled' : ''}
-        ${isLoading ? 'loading' : ''}`}
             aria-busy={isLoading}
+            aria-label={ariaLabel || label}
+            className={`custom-button ${variant} ${size} ${className} 
+                ${disabled ? 'disabled' : ''} ${isLoading ? 'loading' : ''}`}
         >
             {isLoading ? (
-                <span className="button-loader"></span>
+                <span className="button-loader" aria-hidden="true" />
             ) : (
                 <>
                     {icon && <span className="button-icon">{icon}</span>}
-                    {label}
+                    <span className="button-label">{label}</span>
                 </>
             )}
         </button>
     );
+};
+
+CustomButton.propTypes = {
+    label: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+    type: PropTypes.string,
+    disabled: PropTypes.bool,
+    className: PropTypes.string,
+    variant: PropTypes.oneOf(['primary', 'secondary', 'text']),
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    icon: PropTypes.element,
+    isLoading: PropTypes.bool,
+    ariaLabel: PropTypes.string
 };
 
 export default CustomButton;

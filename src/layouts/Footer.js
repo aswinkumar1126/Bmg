@@ -135,30 +135,6 @@ const Footer = () => {
                     viewport={{ once: true, margin: "-50px" }}
                     variants={columnVariants}
                 >
-                    <h4 className="footer-header">CONTACT</h4>
-                    <motion.p variants={itemVariants}>
-                        Showroom Address : <br /> M/s. BMG Jewellers Private Limited,<br />
-                        160, Melamasi Street,<br />
-                        Madurai- 625001
-                    </motion.p>
-                    <motion.p variants={itemVariants}>
-                        Primary Contact Numbers :<br /> +91- 70946 70946,<br />
-                        86085 96085,<br />
-                        86829 96829
-                    </motion.p>
-                    <motion.p variants={itemVariants}>
-                        websupport@justdial.com
-                    </motion.p>
-                </motion.div>
-
-                {/* Fourth Column - Connect */}
-                <motion.div
-                    className="footer-column"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-50px" }}
-                    variants={columnVariants}
-                >
                     <h4 className="footer-header">CONNECT</h4>
                     <motion.div
                         className="social-icons"
@@ -199,6 +175,28 @@ const Footer = () => {
                             </motion.button>
                         </div>
                     </motion.div>
+                </motion.div>
+
+                {/* Fourth Column - Connect */}
+            
+                <motion.div
+                    className="footer-column"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                    variants={columnVariants}
+                >
+                    <h4 className="footer-header">CONTACT</h4>
+                    <motion.p variants={itemVariants}>
+                        <h4 style={{ color: 'darkblue' }}>Showroom Address :</h4>M/s. BMG Jewellers Private Limited,160, Melamasi Street,
+                        Madurai- 625001
+                    </motion.p>
+                    <motion.p variants={itemVariants}>
+                        <h4 style={{ color: 'darkblue' }}> Primary Contact Number:</h4>+91-70946 70946, 86085 96085, 86829 96829
+                    </motion.p>
+                    <motion.p variants={itemVariants}>
+                        websupport@justdial.com
+                    </motion.p>
                 </motion.div>
             </div>
 

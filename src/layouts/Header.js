@@ -4,12 +4,11 @@ import Search from '../components/Search';
 import React, { useEffect, useState } from 'react';
 import './style/Header.css';
 import {
-    FaShoppingCart, FaMapMarkerAlt, FaPhone, FaEnvelope,
-    FaBoxOpen, FaChevronDown, FaBars, FaTimes
+    FaShoppingCart, FaChevronDown, FaBars, FaTimes
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
-import { FaMoon, FaSun } from 'react-icons/fa';
+// import { useTheme } from '../context/ThemeContext';
+// import { FaMoon, FaSun } from 'react-icons/fa';
 
 
 function Header() {
@@ -17,10 +16,9 @@ function Header() {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
-    const { theme, toggleTheme } = useTheme();
     const location = useLocation();
 
- 
+
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
@@ -95,54 +93,6 @@ function Header() {
 
     return (
         <header className={`header-container ${isScrolled ? 'scrolled' : ''}`}>
-            {/* Top Bar */}
-            <div className="top-bar">
-                <div className="top-bar-content">
-                    <div className="top-contact-info">
-                        <div className="contact-items">
-                            <motion.a href="tel:+91-7094670946" className="contact-item" whileHover={{ x: 3 }}>
-                                <FaPhone /> +91-7094670946
-                            </motion.a>
-                            <motion.a href="mailto:websupport@justdial.com" className="contact-item" whileHover={{ x: 3 }}>
-                                <FaEnvelope /> websupport@justdial.com
-                            </motion.a>
-                        </div>
-                    </div>
-                    <div>
-                        {/* Pass silver rate as prop
-                        <SilverRate rate={silverRate} /> */}
-                    </div>
-
-                    <div className="top-social-links">
-                        <motion.span className="location" whileHover={{ x: 3 }}>
-                            <FaMapMarkerAlt /> Chennai
-                        </motion.span>
-
-                        <motion.div whileHover={{ scale: 1.05 }}>
-                            <Link to="/track-order" className="track-order">
-                                <FaBoxOpen /> Track Order
-                            </Link>
-                        </motion.div>
-
-                        <div className="header-actions">
-                            <motion.button
-                                className="theme-toggle"
-                                onClick={toggleTheme}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                aria-label={`Toggle ${theme === 'light' ? 'dark' : 'light'} mode`}
-                            >
-                                {theme === 'light' ? (
-                                    <FaMoon className="theme-icon" />
-                                ) : (
-                                    <FaSun className="theme-icon" style={{ color: '#FFD700' }} />
-                                )}
-                            </motion.button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {/* Main Header */}
             <div className="main-header">
                 <div className="main-header-content">

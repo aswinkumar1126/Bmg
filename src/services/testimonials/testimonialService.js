@@ -1,7 +1,7 @@
 import { axiosInstanceAdmin } from "../../api/axios";
 
 export const getAllTestimonials = async () => {
-    const response = await axiosInstanceAdmin.get('testimonials/getAll');
+    const response = await axiosInstanceAdmin.get('/testimonials/getAll');
     return response.data;
 };
 
@@ -18,7 +18,7 @@ export const createTestimonial = async (data) => {
         formData.append('image', data.image);
     }
 
-    const response = await axiosInstanceAdmin.post('testimonials', formData);
+    const response = await axiosInstanceAdmin.post('/testimonials', formData);
     return response.data;
 };
   

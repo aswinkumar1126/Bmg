@@ -1,59 +1,151 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import './NotFound.css'; // We'll create this CSS file next
+import './NotFound.css';
+
 function NotFound() {
     const navigate = useNavigate();
+
+    // Animation variants for better organization
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                duration: 0.6,
+                staggerChildren: 0.2,
+                when: "beforeChildren"
+            }
+        },
+        exit: { opacity: 0, transition: { duration: 0.5 } }
+    };
+
+    const itemVariants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: { duration: 0.6, ease: "easeOut" }
+        }
+    };
+
+    const errorCodeVariants = {
+        pulse: {
+            scale: [1, 1.05, 1],
+            rotate: [0, 2, -2, 0],
+            transition: {
+                duration: 1.5,
+                repeat: Infinity,
+                repeatDelay: 4,
+                ease: "easeInOut"
+            }
+        }
+    };
+
+    const buttonHover = {
+        hover: {
+            y: -3,
+            transition: {
+                duration: 0.3,
+                ease: "easeOut"
+            }
+        },
+        tap: {
+            scale: 0.95,
+            transition: {
+                duration: 0.2
+            }
+        }
+    };
 
     return (
         <motion.div
             className="not-found-container"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
         >
             <div className="not-found-content">
                 <motion.div
                     className="error-code"
-                    animate={{
-                        scale: [1, 1.1, 1],
-                        rotate: [0, 5, -5, 0]
-                    }}
-                    transition={{
-                        scale: { duration: 1, repeat: Infinity, repeatDelay: 3 },
-                        rotate: { duration: 1, repeat: Infinity, repeatDelay: 3 }
-                    }}
+                    variants={errorCodeVariants}
+                    animate="pulse"
                 >
                     404
                 </motion.div>
 
-                <h1 className="error-title">Page Not Found</h1>
+                <motion.h1
+                    className="error-title"
+                    variants={itemVariants}
+                >
+                    Page Not Found
+                </motion.h1>
 
-                <p className="error-message">
+                <motion.p
+                    className="error-message"
+                    variants={itemVariants}
+                >
                     Oops! The page you're looking for doesn't exist or has been moved.
-                </p>
+                </motion.p>
 
-                <div className="action-buttons">
+                <motion.div
+                    className="action-buttons"
+                    variants={itemVariants}
+                >
                     <motion.button
                         className="home-button"
                         onClick={() => navigate('/')}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                        variants={buttonHover}
+                        whileHover="hover"
+                        whileTap="tap"
                     >
+                        <span className="button-icon">🏠</span>
                         Return to Home
                     </motion.button>
 
                     <motion.button
                         className="back-button"
                         onClick={() => navigate(-1)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                        variants={buttonHover}
+                        whileHover="hover"
+                        whileTap="tap"
                     >
+                        <span className="button-icon">↩️</span>
                         Go Back
                     </motion.button>
-        
-                </div>
+                </motion.div>
             </div>
+
+            {/* Decorative animated elements */}
+            <motion.div
+                className="bg-circle circle-1"
+                initial={{ x: -100, y: -100, opacity: 0 }}
+                animate={{
+                    x: [0, 20, 0],
+                    y: [0, 20, 0],
+                    opacity: [0.1, 0.15, 0.1],
+                }}
+                transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+            />
+            <motion.div
+                className="bg-circle circle-2"
+                initial={{ x: 100, y: 100, opacity: 0 }}
+                animate={{
+                    x: [0, -20, 0],
+                    y: [0, -20, 0],
+                    opacity: [0.1, 0.15, 0.1],
+                }}
+                transition={{
+                    duration: 18,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 2
+                }}
+            />
         </motion.div>
     );
 }

@@ -83,6 +83,7 @@ const Login = () => {
                     <motion.input
                         className="login-input"
                         type="tel"
+                        autocomplete="mobileNumber"
                         placeholder="Mobile Number"
                         value={mobileNumber}
                         onChange={(e) => setMobileNumber(e.target.value)}
@@ -95,6 +96,7 @@ const Login = () => {
                             <motion.input
                                 className="login-input"
                                 type="text"
+                                autocomplete="Name"
                                 placeholder="Name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -104,6 +106,7 @@ const Login = () => {
                             <motion.input
                                 className="login-input"
                                 type="text"
+                                autocomplete="secretKey"
                                 placeholder="Secret Key"
                                 value={key}
                                 onChange={(e) => setKey(e.target.value)}
@@ -117,6 +120,7 @@ const Login = () => {
                         className="login-input"
                         type="password"
                         placeholder="Password"
+                        autocomplete="current-assword"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         variants={itemVariants}
