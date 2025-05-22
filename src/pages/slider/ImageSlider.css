@@ -37,11 +37,12 @@
 /* Base Slider Container */
 .slider-container {
     position: relative;
+    margin:0 auto;
     width: 100%;
     max-width: 100%;
-    margin: 0 auto;
     overflow: hidden;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
+    margin-top: 40px;
     box-shadow: var(--shadow-md);
     background-color: var(--bg-color);
     transition: var(--transition-base);
@@ -62,14 +63,14 @@
 .image-wrapper {
     position: relative;
     width: 100%;
-    padding-top: 42.85%;
+    padding-top: 38.85%;
     /* 21:9 aspect ratio for modern banners */
     background-color: var(--skeleton-color);
 }
 
 .slide-image {
     position: absolute;
-    top: 0;
+    top:0;
     left: 0;
     width: 100%;
     height: 100%;
@@ -332,6 +333,10 @@
 
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
+    .slider-container{
+        left:0;
+        margin: 0 auto;
+    }
     .slide-caption {
         padding: 1.5rem;
     }
@@ -342,17 +347,20 @@
 }
 
 @media (max-width: 768px) {
+    .slider-container {
+            margin: 0 auto;
+        }
     .slide-caption {
         padding: 1.25rem;
     }
 
     .slide-title {
-        font-size: 1.25rem;
+        font-size: 1rem;
         margin-bottom: 0.375rem;
     }
 
     .slide-description {
-        font-size: 0.875rem;
+        font-size: 0.575rem;
         max-width: 90%;
     }
 
@@ -368,20 +376,24 @@
 }
 
 @media (max-width: 480px) {
+    .slider-container {
+            margin: 0 auto;
+        }
     .slide-caption {
         padding: 1rem;
     }
 
     .slide-title {
-        font-size: 1.125rem;
+        font-size: 0.95rem;
     }
 
     .slide-description {
-        font-size: 0.8125rem;
+        font-size: 0.7125rem;
     }
 
     .slick-dots {
         bottom: 1rem !important;
+    
     }
 
     .error-icon,

@@ -19,7 +19,7 @@ function Header() {
 
     const [showNav, setShowNav] = useState(true);
     const lastScrollY = useRef(window.scrollY);
-    const [rates, setRates] = useState({ gold: 8540, silver: 105 });
+    const [rates, setRates] = useState({ gold: 8860, silver: 107 });
     const [rateUpdated, setRateUpdated] = useState(false);
 
     useEffect(() => {
@@ -126,43 +126,55 @@ function Header() {
             {/* Main Header */}
             <div className="main-header">
                 <div className="main-header-content">
-                    <motion.div
-                        className="logo-container"
-                        whileHover={{ x: 5 }}
-                        transition={{ type: 'spring', stiffness: 300 }}
-                    ><Link to="/" >
-                        <motion.img
-                            src={Logo}
-                            alt="BMJ Jewellers Logo"
-                            loading="lazy"
-                            className="logo-img"
-                            whileHover={{ rotate: -5 }}
-                            transition={{ type: 'spring', damping: 20 }}
-                        />
-                        </Link>
-                        <span className='logo-text'>
-                            <pre>BMG Jewellers {'\n'}<span className='sub-logotext'>Private Limited</span></pre>
-                        </span>
-                    </motion.div>
-
-                    
-                    <div className='rate-section'>
+                    <div className="header-left">
                         <motion.div
-                            className={`rate-cards-container ${rateUpdated ? 'rate-updated' : ''}`}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5 }}
+                            className="logo-container"
+                            whileHover={{ x: 5 }}
+                            transition={{ type: 'spring', stiffness: 300 }}
                         >
-                            <GoldRateCard rate={rates.gold} />
-                            <SilverRateCard rate={rates.silver} />
+                            <Link to="/">
+                                <motion.img
+                                    src={Logo}
+                                    alt="BMJ Jewellers Logo"
+                                    loading="lazy"
+                                    className="logo-img"
+                                    whileHover={{ rotate: -5 }}
+                                    transition={{ type: 'spring', damping: 20 }}
+                                />
+                            </Link>
+                            <span className='logo-text'>
+                                <pre>BMG Jewellers {'\n'}<span className='sub-logotext'>Private Limited</span></pre>
+                            </span>
                         </motion.div>
-                    </div>
-                    <div className="search-bar-wrapper">
-                        <Search />
-                    </div>
-                        
 
-                    <div className="header-actions">
+                        <button
+                            className="mobile-menu-toggle"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-label="Toggle Menu"
+                        >
+                            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+                        </button>
+                    </div>
+
+                    <div className="header-middle">
+                        <div className="search-bar-wrapper">
+                            <Search />
+                        </div>
+                    </div>
+
+                    <div className="header-right">
+                        <div className='rate-section'>
+                            <motion.div
+                                className={`rate-cards-container ${rateUpdated ? 'rate-updated' : ''}`}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <GoldRateCard rate={rates.gold} />
+                                <SilverRateCard rate={rates.silver} />
+                            </motion.div>
+                        </div>
+
                         <motion.div
                             className="cart-container"
                             whileHover={{ scale: 1.05 }}
@@ -185,19 +197,11 @@ function Header() {
                                 </motion.span>
                             </Link>
                         </motion.div>
-
-                        <button
-                            className="mobile-menu-toggle"
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            aria-label="Toggle Menu"
-                        >
-                            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-                        </button>
                     </div>
                 </div>
             </div>
 
-            {/* Navigation */}
+            {/* Navigation - Updated for better mobile visibility */}
             <nav className={`nav-links ${isMobileMenuOpen ? 'active' : ''} ${isScrolled ? 'scrolled' : ''} ${showNav ? 'show' : 'hide'}`}>
                 <ul className="nav-list">
                     {navItems.map((item) => (
@@ -264,5 +268,4 @@ function Header() {
         </header>
     );
 }
-
 export default Header;
