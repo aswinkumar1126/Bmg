@@ -47,7 +47,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="product-buttons-row">
-                    <CustomButton className="buy-now-btn" label="Add to Cart"></CustomButton>
+                    <CustomButton className="buy-now-btn" label="Add to Cart" ></CustomButton>
                     <CustomButton className="buy-now-btn" label="Buy Now" ></CustomButton>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import ImageSlider from "../slider/ImageSlider";
-import Testimonial from "../testimonial/Testimonial";
+//import Testimonial from "../testimonial/Testimonial";
 import AllProducts from "../products/AllProducts";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
 import ErrorComponent from "../../components/ErrorComponent";
@@ -38,9 +38,9 @@ function Home() {
                 <Videos videoUrl={latestVideo} loading={videoLoading} />
             </section>
 
-            <section className="testimonial-section">
-                <Testimonial videoUrl={latestVideo} loading={videoLoading} />
-            </section>
+             {/* <section className="testimonial-section">
+                <Testimonial />
+            </section>  */}
         </div>
     );
 }

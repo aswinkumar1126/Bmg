@@ -173,6 +173,7 @@ const Contact = () => {
                                     onChange={handleChange}
                                     placeholder="Your Name"
                                     required
+                                    className='text-input'
                                 />
                             </motion.div>
 
@@ -189,6 +190,7 @@ const Contact = () => {
                                     onChange={handleChange}
                                     placeholder="Your Email"
                                     required
+                                    className='text-input'
                                 />
                             </motion.div>
 
@@ -204,6 +206,7 @@ const Contact = () => {
                                     value={formData.phone}
                                     onChange={handleChange}
                                     placeholder="Your Phone Number"
+                                    className='text-input'
                                 />
                             </motion.div>
 
@@ -220,6 +223,7 @@ const Contact = () => {
                                     placeholder="Your Message"
                                     rows="5"
                                     required
+                                    className='text-input'
                                 ></textarea>
                             </motion.div>
 

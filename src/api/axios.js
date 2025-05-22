@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Base axios instance - no change
 const axiosInstance = axios.create({
-    baseURL: "https://api.bmgjewellers.com/api/v1",
+    baseURL: "http://localhost:8080/api/v1",
     headers: {
         "Content-Type": "application/json",
     },
@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 
 // Admin axios without auth (if you want to keep it separate)
 export const axiosAdminInstance = axios.create({
-    baseURL: "http://api.bmgjewellers.com/admin",
+    baseURL: "http://localhost:8080/admin",
     headers: {
         "Content-Type": "application/json",
     },
@@ -18,7 +18,7 @@ export const axiosAdminInstance = axios.create({
 
 // Admin axios with auth interceptor
 export const axiosInstanceAdmin = axios.create({
-    baseURL: "https://api.bmgjewellers.com/api/v1",
+    baseURL: "http://localhost:8080/api/v1",
     headers: {
         "Content-Type": "application/json",
     },

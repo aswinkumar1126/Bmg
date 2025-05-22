@@ -15,13 +15,13 @@ function AllProducts({ products = [], loading, error }) {
     console.log(products);
 
     return (
-        <div className="product-page">
-            <div className="page-header">
+        <div className="product-container">
+            <div className="page-header" >
                 <h2 className="title animate-char">Our Premium Collection</h2>
                 <p className="subtitle animate-subtitle">Discover quality products for your needs</p>
             </div>
 
-            <div className="product-grid">
+             <div className="product-grid">
                 {loading ? (
                     <LoadingSkeleton count={6} />
                 ) : (
@@ -34,7 +34,7 @@ function AllProducts({ products = [], loading, error }) {
                         />
                     ))
                 )}
-            </div>
+            </div> 
         </div>
     );
 }

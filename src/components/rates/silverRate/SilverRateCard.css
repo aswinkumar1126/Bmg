@@ -1,0 +1,78 @@
+.silver-rate-card {
+    background: linear-gradient(135deg, #f5f5f5, #c0c0c0);
+    border-radius: 6px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 8px rgba(192, 192, 192, 0.3);
+    margin: 0 8px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.silver-rate-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(192, 192, 192, 0.4);
+}
+
+.metal-name {
+    font-size: 10px;
+    color: #707070;
+    font-weight: 600;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rate-value {
+    font-size: 12px;
+    color: #444;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.rupee-icon {
+    margin-right: 4px;
+    color: #707070;
+    font-size: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .silver-rate-card {
+        padding: 6px 8px;
+        min-width: 70px;
+    }
+
+    .metal-name {
+        font-size: 9px;
+    }
+
+    .rate-value {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .silver-rate-card {
+        padding: 4px 6px;
+        min-width: 60px;
+        border-radius: 4px;
+    }
+
+    .metal-name {
+        font-size: 8px;
+    }
+
+    .rate-value {
+        font-size: 10px;
+    }
+
+    .rupee-icon {
+        font-size: 8px;
+        margin-right: 2px;
+    }
+}

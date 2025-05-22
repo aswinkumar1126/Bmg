@@ -31,8 +31,8 @@
 
 .header {
     padding: 1.5rem 2rem;
-    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-    color: white;
+    background: linear-gradient(135deg, #f7834a 0%, #d84c06 100%);
+    color: rgb(0, 3, 194);
 }
 
 .heading {

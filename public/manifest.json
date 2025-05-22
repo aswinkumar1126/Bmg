@@ -1,14 +1,13 @@
 {
-  "short_name": "Bmg app",
-  "name": "Bmg app",
+  "short_name": "Bmg App",
+  "name": "Bmg Jewellers",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#ff6600",
   "background_color": "#ffffff",
   "icons": [
-    
     {
-      "src": "icon-512.png",
+      "src": "assets/icon/icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

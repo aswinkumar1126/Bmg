@@ -72,6 +72,14 @@ const ManageProduct = () => {
         return <div className={styles.error}>{error}</div>;
     }
 
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value);
+    };
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -142,7 +150,7 @@ const ManageProduct = () => {
                                                 min="0"
                                             />
                                         ) : (
-                                            `$${parseFloat(prod.productPrice).toFixed(2)}`
+                                                `${formatCurrency(parseFloat(prod.productPrice).toFixed(2))}`
                                         )}
                                     </td>
                                     <td>

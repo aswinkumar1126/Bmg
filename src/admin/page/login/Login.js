@@ -8,12 +8,14 @@ const Login = () => {
         mobileNumber,
         name,
         password,
+        email,
         loading,
         error,
         mode,
         key,
         setMobileNumber,
         setName,
+        setEmail,
         setPassword,
         setKey,
         setMode,
@@ -24,6 +26,7 @@ const Login = () => {
 
     const toggleMode = () => {
         setMode(isSignup ? "login" : "signup");
+        setEmail("");
         setMobileNumber("");
         setName("");
         setPassword("");
@@ -83,7 +86,6 @@ const Login = () => {
                     <motion.input
                         className="login-input"
                         type="tel"
-                        autocomplete="mobileNumber"
                         placeholder="Mobile Number"
                         value={mobileNumber}
                         onChange={(e) => setMobileNumber(e.target.value)}
@@ -96,7 +98,6 @@ const Login = () => {
                             <motion.input
                                 className="login-input"
                                 type="text"
-                                autocomplete="Name"
                                 placeholder="Name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -106,7 +107,15 @@ const Login = () => {
                             <motion.input
                                 className="login-input"
                                 type="text"
-                                autocomplete="secretKey"
+                                placeholder="Enter Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                variants={itemVariants}
+                                required
+                            />
+                            <motion.input
+                                className="login-input"
+                                type="text"
                                 placeholder="Secret Key"
                                 value={key}
                                 onChange={(e) => setKey(e.target.value)}
@@ -120,7 +129,6 @@ const Login = () => {
                         className="login-input"
                         type="password"
                         placeholder="Password"
-                        autocomplete="current-assword"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         variants={itemVariants}

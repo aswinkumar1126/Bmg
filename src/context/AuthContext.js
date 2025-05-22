@@ -8,6 +8,7 @@ export const AuthContextProvider = ({ children }) => {
     const [mobileNumber, setMobileNumber] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
     const [key, setKey] = useState(""); // for signup secretKey
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -19,8 +20,8 @@ export const AuthContextProvider = ({ children }) => {
     const login = () => setIsAuthenticated(true);
     const logout = () => {
         setIsAuthenticated(false);
-        localStorage.removeItem("auth");
-        localStorage.removeItem("auth_id");
+        // localStorage.removeItem("auth");
+        // localStorage.removeItem("auth_id");
         navigate("/admin-auth");
     };
 
@@ -42,6 +43,9 @@ export const AuthContextProvider = ({ children }) => {
             setError("Name is required for signup");
             return;
         }
+        if(mode === "signup" && !email){
+            setError("Email is required for signup")
+        }
         if (!password) {
             setError("Password is required");
             return;
@@ -50,7 +54,7 @@ export const AuthContextProvider = ({ children }) => {
             setError("Password must be at least 6 characters");
             return;
         }
-
+        
         setLoading(true);
 
         try {
@@ -61,7 +65,9 @@ export const AuthContextProvider = ({ children }) => {
                     mobileNumber,
                     name,
                     password,
+                    email,
                     secretKey: key,
+                    registerAt: new Date().toISOString(),
                 };
                 responseData = await signupAdmin(payload);
             } else {
@@ -69,11 +75,20 @@ export const AuthContextProvider = ({ children }) => {
             }
 
             if (responseData) {
+                console.log(responseData);
                 const token = responseData.admin_token; // ✅ make sure backend sends this
+                let adminId;
 
+                if (mode === "signup") {
+                    // signup response has id at root level
+                    adminId = responseData.id;
+                } else {
+                    // login response has admin.id
+                    adminId = responseData.admin?.id;
+                }
                 // ✅ Store token and admin id
                 localStorage.setItem("admin_token", token);
-                localStorage.setItem("auth_id", responseData.admin.id);
+                localStorage.setItem("auth_id", adminId);
 
                 login();
                 navigate("/admin");
@@ -94,6 +109,7 @@ export const AuthContextProvider = ({ children }) => {
                 name,
                 password,
                 key,
+                email,
                 mode,
                 loading,
                 error,
@@ -101,6 +117,7 @@ export const AuthContextProvider = ({ children }) => {
                 setMobileNumber,
                 setName,
                 setPassword,
+                setEmail,
                 setKey,
                 setMode,
                 handleAuth,

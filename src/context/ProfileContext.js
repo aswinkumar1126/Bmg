@@ -56,7 +56,7 @@ export const ProfileProvider = ({ children }) => {
         try {
             await deleteAdmin(id);
             setProfile({});
-            localStorage.removeItem('auth id');
+            //localStorage.removeItem('auth id');
             setError(null);
         } catch (err) {
             console.error('Error deleting profile:', err);

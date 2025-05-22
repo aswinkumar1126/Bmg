@@ -1,6 +1,6 @@
 /* Footer Container */
 .footer {
-    background: linear-gradient(135deg, rgb(223, 186, 139), #e9b67c);
+    background: linear-gradient(135deg, rgb(253, 101, 0), #e29e5d);
     color: rgb(0, 0, 0);
     padding: 10px 0 10px;
     font-family: 'Poppins', sans-serif;
@@ -16,7 +16,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #f4b400, #d4a000, #f4b400);
+    background: linear-gradient(90deg, #f8d881, #cfaf46, #9cdfce);
 }
 
 .footer-container {
@@ -38,12 +38,12 @@
 .footer-header {
     font-weight: 600;
     margin-bottom: 15px;
-    color: #060020;
+    color: #0e0438 !important;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     position: relative;
     margin-bottom: 10px;
-    font-size: 0.95rem;
+    font-size: 1.25rem;
     /* Slightly smaller */
 }
 
@@ -56,7 +56,14 @@
     height: 2px;
     background: #302917;
 }
-
+.footer-contact-text{
+    color: #131416 !important;
+}
+.contact-title{
+    color: #0a0461;
+    font-weight: 400;
+    font-size: 17px;
+}
 .footer-links {
     list-style-type: none;
     padding: 0;
@@ -67,10 +74,10 @@
     margin: 5px 0;
     cursor: pointer;
     transition: all 0.3s;
-    font-weight: 300;
+    font-weight: 400;
     position: relative;
-    padding-left: 15px;
-    font-size: 0.8rem;
+    padding-left: 10px;
+    font-size: 1rem;
     line-height: 1.5;
 }
 
@@ -83,19 +90,20 @@
     line-height: 0.8;
 }
 .footer-link-item a {
-    color: rgb(32, 29, 29);
+    color: rgb(36, 35, 35) !important;
     text-decoration: none;
     display: block;
     transition: color 0.3s;
 }
 
 .footer-link-item a:hover {
-    color: #011615;
+    color: #006863 !important;
+    font-weight: 500px;
 }
 
 .active-footer-link {
-    color: #1b1401 !important;
-    font-weight: 500;
+    color: #b346df !important;
+    font-weight: 500px;
 }
 
 .footer-link-item a::before {
@@ -108,7 +116,7 @@
 }
 .footer-column p {
     margin: 5px 0;
-    font-weight: 300;
+    font-weight: 300px;
     line-height: 1.5;
     font-size: 0.85rem;
 }
@@ -121,8 +129,8 @@
 }
 
 .social-icons a {
-    font-size: 1rem;
-    color: rgb(114, 18, 158);
+    font-size: 1.4rem;
+    color: rgb(19, 18, 20) !important;
     text-decoration: none;
     width: 36px;
     height: 36px;
@@ -135,13 +143,14 @@
 }
 
 .newsletter {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .newsletter h5 {
-    font-size: 0.85rem;
-    margin-bottom: 4px;
-    font-weight: 400;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    font-weight: 50px;
+    color: #000000;
 }
 
 .newsletter-input {
@@ -160,8 +169,8 @@
 
 .newsletter-input button {
     padding: 0 12px;
-    background: #f4b400;
-    color: #222;
+    background: #29f400;
+    color: #000000;
     border: none;
     border-radius: 0 4px 4px 0;
     font-weight: 600;
@@ -174,9 +183,10 @@
 .footer-bottom {
     text-align: center;
     margin-top: 10px;
-    font-size: 0.75rem;
+    font-size: 0.95rem;
     padding-top: 05px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #272626;
 }
 
 .copy-rights {
@@ -190,14 +200,14 @@
 }
 .desingedby{
     margin: 0 auto;
-    font-size: 0.75rem;
+    font-size: 0.95rem;
     width: fit-content;
     text-decoration: none;
-    color: azure;
+    color: #2c2e2e !important;
 
 }
-.desingedby:hover {
-    color: #f4b400;
+.desingedby:hover {  
+    color: rgb(139, 26, 161) !important;
 }
 
 .payment-methods {
@@ -205,8 +215,8 @@
     display: flex;
     justify-content: center;
     gap: 12px;
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.8rem;
+    color: rgba(88, 85, 85, 0.7);
 }
 
 /* Mobile Responsiveness */

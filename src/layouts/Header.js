@@ -7,10 +7,9 @@ import {
     FaShoppingCart, FaChevronDown, FaBars, FaTimes
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-// import { useTheme } from '../context/ThemeContext';
-// import { FaMoon, FaSun } from 'react-icons/fa';
-
-
+import { useRef } from 'react';
+import GoldRateCard from '../components/rates/goldRate/goldRateCard';
+import SilverRateCard from '../components/rates/silverRate/SilverRateCard';
 function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
@@ -18,10 +17,40 @@ function Header() {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
     const location = useLocation();
 
+    const [showNav, setShowNav] = useState(true);
+    const lastScrollY = useRef(window.scrollY);
+    const [rates, setRates] = useState({ gold: 8540, silver: 105 });
+    const [rateUpdated, setRateUpdated] = useState(false);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setRates(prev => ({
+                gold: prev.gold + (Math.random() > 0.5 ? 10 : -10),
+                silver: prev.silver + (Math.random() > 0.5 ? 1 : -1)
+            }));
+            setRateUpdated(true);
+            setTimeout(() => setRateUpdated(false), 1000);
+        }, 30000); // Update every 30 seconds
+
+        return () => clearInterval(interval);
+    }, []);
+
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            const currentScrollY = window.scrollY;
+
+            setIsScrolled(currentScrollY > 50);
+
+            if (currentScrollY > lastScrollY.current) {
+                // Scrolling down
+                setShowNav(false);
+            } else {
+                // Scrolling up
+                setShowNav(true);
+            }
+
+            lastScrollY.current = currentScrollY;
         };
 
         const handleResize = () => {
@@ -39,6 +68,7 @@ function Header() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+    
 
     // Scroll to top on route change
     useEffect(() => {
@@ -74,7 +104,7 @@ function Header() {
         { name: 'WHY US', path: '/why-us' },
         { name: 'GALLERY', path: '/gallery' },
         { name: 'VIDEOS', path: '/videos' },
-        { name: 'TESTIMONIALS', path: '/testimonials' },
+        //{ name: 'TESTIMONIALS', path: '/testimonials' },
         { name: 'CONTACT US', path: '/contact' }
     ];
 
@@ -100,23 +130,37 @@ function Header() {
                         className="logo-container"
                         whileHover={{ x: 5 }}
                         transition={{ type: 'spring', stiffness: 300 }}
-                    >
+                    ><Link to="/" >
                         <motion.img
                             src={Logo}
                             alt="BMJ Jewellers Logo"
                             loading="lazy"
                             className="logo-img"
                             whileHover={{ rotate: -5 }}
-                            transition={{ type: 'spring', damping: 10 }}
+                            transition={{ type: 'spring', damping: 20 }}
                         />
-                        <Link to="/" className="logo-text">
-                            <pre>BMG Jewellers {'\n'}<span className='sub-logotext'>Private Limited</span></pre>
                         </Link>
+                        <span className='logo-text'>
+                            <pre>BMG Jewellers {'\n'}<span className='sub-logotext'>Private Limited</span></pre>
+                        </span>
                     </motion.div>
 
+                    
+                    <div className='rate-section'>
+                        <motion.div
+                            className={`rate-cards-container ${rateUpdated ? 'rate-updated' : ''}`}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <GoldRateCard rate={rates.gold} />
+                            <SilverRateCard rate={rates.silver} />
+                        </motion.div>
+                    </div>
                     <div className="search-bar-wrapper">
                         <Search />
                     </div>
+                        
 
                     <div className="header-actions">
                         <motion.div
@@ -154,7 +198,7 @@ function Header() {
             </div>
 
             {/* Navigation */}
-            <nav className={`nav-links ${isMobileMenuOpen ? 'active' : ''} ${isScrolled ? 'scrolled' : ''}`} >
+            <nav className={`nav-links ${isMobileMenuOpen ? 'active' : ''} ${isScrolled ? 'scrolled' : ''} ${showNav ? 'show' : 'hide'}`}>
                 <ul className="nav-list">
                     {navItems.map((item) => (
                         <li

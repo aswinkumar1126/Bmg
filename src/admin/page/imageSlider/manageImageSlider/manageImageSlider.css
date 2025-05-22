@@ -71,7 +71,7 @@
 }
 
 .slider-table th {
-    background-color: var(--primary);
+    background-color:#f7834a;
     color: var(--text-light);
     font-weight: 600;
     padding: 1rem 1.5rem;

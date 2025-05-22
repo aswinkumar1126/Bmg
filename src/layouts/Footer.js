@@ -187,14 +187,14 @@ const Footer = () => {
                     variants={columnVariants}
                 >
                     <h4 className="footer-header">CONTACT</h4>
-                    <motion.p variants={itemVariants}>
-                        <h4 style={{ color: 'darkblue' }}>Showroom Address :</h4>M/s. BMG Jewellers Private Limited,160, Melamasi Street,
+                    <motion.p variants={itemVariants} className='footer-contact-text'>
+                        <span className='contact-title'>Showroom Address :</span>M/s. BMG Jewellers Private Limited,160, Melamasi Street,
                         Madurai- 625001
                     </motion.p>
-                    <motion.p variants={itemVariants}>
-                        <h4 style={{ color: 'darkblue' }}> Primary Contact Number:</h4>+91-70946 70946, 86085 96085, 86829 96829
+                    <motion.p variants={itemVariants} className='footer-contact-text'>
+                        <span className='contact-title'> Primary Contact Number:</span>+91-70946 70946, 86085 96085, 86829 96829
                     </motion.p>
-                    <motion.p variants={itemVariants}>
+                    <motion.p variants={itemVariants} className='footer-contact-text'>
                         websupport@justdial.com
                     </motion.p>
                 </motion.div>

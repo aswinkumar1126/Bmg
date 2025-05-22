@@ -59,7 +59,7 @@
     overflow-x: auto;
     margin-top: 1.5rem;
     border-radius: var(--border-radius);
-    background: #fff;
+    background: #e7f3ec;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     -webkit-overflow-scrolling: touch;
     color: var(--text-color);
@@ -81,7 +81,7 @@
 }
 
 .rate-table th {
-    background-color: var(--bg-light);
+    background-color: #f7834a;
     font-weight: 600;
     color: var(--text-color);
     text-transform: uppercase;

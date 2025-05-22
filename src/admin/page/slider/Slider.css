@@ -17,7 +17,7 @@
     left: 0;
     width: var(--sidebar-width);
     height: calc(100vh - var(--header-height));
-    background-color: #ff9743;
+    background-color: #f7834a;
     color: white;
     transform: translateX(-100%);
     transition: transform var(--transition-speed) ease;

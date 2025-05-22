@@ -2,7 +2,7 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Home from "../pages/home/Home";
 import ImageSlider from "../pages/slider/ImageSlider";
-import Testimonial from "../pages/testimonial/Testimonial";
+//import Testimonial from "../pages/testimonial/Testimonial";
 import LayoutWrapper from "../layouts/LayoutWrapper";
 import NotFound from "../pages/notFound/NotFound";
 import Login from "../admin/page/login/Login";
@@ -26,6 +26,8 @@ import ManageVideos from "../admin/page/video/manageVideo/ManageVideos";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './AppRoutes.css';
 import ProductDetails from "../pages/productDetails/productDetails";
+import WhyUs from "../pages/whyUs/whyUs";
+import Gallery from "../pages/gallery/gallery";
 
 function AppRouter() {
     const location = useLocation();
@@ -44,8 +46,10 @@ function AppRouter() {
             {/* Public Routes */}
             <Route path="/home" element={<LayoutWrapper><Home /></LayoutWrapper>} />
             <Route path="/image-slider" element={<LayoutWrapper><ImageSlider /></LayoutWrapper>} />
-            <Route path="/testimonials" element={<LayoutWrapper><Testimonial /></LayoutWrapper>} />
+            {/* <Route path="/testimonials" element={<LayoutWrapper><Testimonial /></LayoutWrapper>} /> */}
             <Route path="/about" element={<LayoutWrapper><About /></LayoutWrapper>} />
+            <Route path="/why-us" element={<LayoutWrapper><WhyUs /></LayoutWrapper>} />
+            <Route path="/gallery" element={<LayoutWrapper><Gallery /></LayoutWrapper>} />
             <Route path="/contact" element={<LayoutWrapper><Contact /></LayoutWrapper>} />
             <Route path="/videos" element={<LayoutWrapper><AllVideos /></LayoutWrapper>} />
             <Route path="/products" element={<LayoutWrapper><Product /></LayoutWrapper>} />

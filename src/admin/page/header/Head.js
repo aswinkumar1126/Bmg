@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FiUser, FiLogOut,  FiMenu, FiX } from 'react-icons/fi';
-import { FaGem } from 'react-icons/fa';
+import Logo from "../../../assets/images/header/weblogo.png"
 import './Head.css';
 import Search from '../../../components/Search';
 import { ProfileContext } from '../../../context/ProfileContext';
@@ -38,12 +38,14 @@ const Head = ({ toggleSidebar, isSidebarOpen }) => {
             scrollContainer?.removeEventListener('scroll', handleScroll);
         };
     }, [location.pathname]);
+    
+
 
     return (
-        <header className={`header ${scrolled ? 'scrolled' : ''}`} style={{ backgroundColor:"#ffdea0"}}>
+        <header className={`header ${scrolled ? 'scrolled' : ''}`} >
             <div className="header-left">
                 <div className="brand">
-                    <FaGem className="brand-icon" />
+                    <img src={Logo} alt='logo' className="brand-icon"></img>
                     <span className="jewelry-name">BMG Jewellers</span>
                     <span className="jewelry-subtitle">Private Limited</span>
                 </div>
@@ -54,6 +56,14 @@ const Head = ({ toggleSidebar, isSidebarOpen }) => {
                 )}
             </div>
 
+        
+
+            <div className="header-right">
+                <div className="search-wrapper">
+                    <Search />
+                </div>
+                
+            </div>
             <div className="header-center">
                 <button
                     className="hamburger"
@@ -67,12 +77,6 @@ const Head = ({ toggleSidebar, isSidebarOpen }) => {
                         <FiMenu className="menu-icon" />
                     )}
                 </button>
-            </div>
-
-            <div className="header-right">
-                <div className="search-wrapper">
-                    <Search />
-                </div>
                 <div
                     className={`profile ${profileOpen ? 'active' : ''}`}
                     onClick={() => setProfileOpen(!profileOpen)}
@@ -107,11 +111,8 @@ const Head = ({ toggleSidebar, isSidebarOpen }) => {
                             )}
                             <ul>
                                 <NavLink to="/admin/profile"> <li> <FiUser className="dropdown-icon" /> <span>Profile</span> </li>
-                                {/* <li>
-                                    <FiKey className="dropdown-icon" />
-                                    <span>Change Password</span>
-                                </li> */}
-                                </NavLink> 
+                                    
+                                </NavLink>
                                 <li>
                                     <FiLogOut className="dropdown-icon" />
                                     <span>Logout</span>
