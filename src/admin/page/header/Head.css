@@ -8,7 +8,7 @@
     --text-color: #ffffff;
     --text-light: rgba(255, 255, 255, 0.8);
     --transition-speed: 0.3s;
-    --header-height: 70px;
+    --header-height: 60px;
     --sidebar-width: 280px;
     --border-radius: 8px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -26,7 +26,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background:#f7834a !important;
+    background-color: #F9F7F7 !important;
     color: var(--text-color);
     padding: 0 2rem;
     height: var(--header-height);
@@ -39,9 +39,9 @@
 .header.scrolled {
     background: linear-gradient(90deg, #d9f0ed 0%, #59e7e7 100%) !important;
     color: black;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(2px);
     box-shadow: var(--elevation-3);
-    height: 60px;
+    height: var(--header-height);
 }
 
 /* Header Left Section */
